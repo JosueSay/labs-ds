@@ -1,47 +1,106 @@
 # TO-DO: Primera Entrega
 
-## **1. Carga y limpieza de datos**
+## 1. Carga, limpieza y preparación de datos
 
-* [ ] Descargar los archivos de:
+* [ ] Descargar los archivos oficiales en formato `.xlsx`:
 
   * Precios: hasta 11 julio 2025
   * Importaciones: hasta 2024 y 2025
   * Consumo: hasta 2024 y 2025
-* [ ] Unir archivos de cada tipo de datos (importación, consumo, precios)
-* [ ] Filtrar únicamente: gasolina super, gasolina regular, diésel (dieselLS desde 2018) y gas licuado
-* [ ] Asegurar consistencia en fechas y unidades
 
-## **2. Análisis exploratorio (EDA)**
+* [ ] Convertir cada archivo `.xlsx` a `.csv` para facilitar su lectura en Python o R
 
-* [ ] Graficar comportamiento general por tipo de combustible
-* [ ] Detectar patrones: picos anuales, estacionalidad, comportamiento en pandemia (2020–2021), últimas tendencias
-* [ ] Identificar meses de mayores importaciones y consumos
-* [ ] Verificar normalidad (histograma, QQ-plot, test de Shapiro si aplica)
-* [ ] Guardar visualizaciones y hallazgos para el reporte
+* [ ] Unir archivos que pertenecen a un mismo tipo de datos:
 
-## **3. Selección de 2–3 series de tiempo**
+  * Importaciones 2024 + 2025
+  * Consumos 2024 + 2025
+  * Precios 2025 ya incluye todo hasta julio
 
-* [ ] Escoger 3 series (mínimo una de precios)
+* [ ] Filtrar **solo las columnas necesarias**:
 
-  * Ej: precios gasolina regular, importación diesel, consumo gas licuado
-* [ ] Para cada serie:
+  * Gasolina regular
+  * Diésel → usar una columna unificada como "diésel total"
+  * Gas licuado (propano)
 
-  * [ ] Definir: fecha inicio, fin y frecuencia
-  * [ ] Graficar la serie
-  * [ ] Descomponer en tendencia, estacionalidad y residuo
-  * [ ] Evaluar estacionariedad (media y varianza)
+* [ ] Para la importación de diésel:
 
-    * [ ] Gráfico de autocorrelación
-    * [ ] Prueba Dickey-Fuller
-    * [ ] Aplicar transformaciones o diferenciación si es necesario
-* [ ] Anotar observaciones y explicaciones para cada análisis
+  * Desde enero 2001 a diciembre 2017: usar “diésel alto azufre”
+  * Desde enero 2018 en adelante: usar “diésel bajo azufre (dieselLS)”
+  * Crear nueva serie: **diésel total = diésel alto azufre (hasta 2017) + dieselLS (desde 2018)**
 
-## **4. Documentación para entrega parcial**
+* [ ] Asegurar consistencia en:
 
-* [ ] Crear documento PDF:
+  * Formato de fechas (`aaaa-mm`)
+  * Frecuencia mensual en consumo/importación
+  * Promediar precios diarios a mensual si es necesario
+  * Unidades homogéneas (barriles de 42 galones, quetzales/galón, etc.)
 
-  * Introducción + descripción breve del dataset
+## 2. Análisis exploratorio (EDA)
+
+* [ ] Graficar cada tipo de combustible por fuente (consumo, importación, precios)
+* [ ] Identificar:
+
+  * Tendencias generales
+  * Meses de mayores valores
+  * Comportamiento durante pandemia (2020–2021)
+  * Comportamiento desde guerra Rusia–Ucrania (2022–2025)
+* [ ] Comparar entre tipos de combustibles
+* [ ] Evaluar distribución:
+
+  * Histograma y QQ-plot
+  * Test de normalidad (opcional)
+
+## 3. Selección y análisis de series de tiempo
+
+Seleccionar **3 series (una por tipo)**:
+
+* Precio mensual de **gasolina regular** (Ciudad Capital)
+* Importación mensual de **diésel total**
+* Consumo mensual de **gas licuado**
+
+Para cada serie:
+
+* [ ] Definir:
+
+  * Fecha de inicio y fin
+  * Frecuencia: mensual
+* [ ] Graficar la serie original
+* [ ] Descomponer en:
+
+  * Tendencia
+  * Estacionalidad
+  * Residuo
+* [ ] Evaluar **estacionariedad**:
+
+  * En **media**:
+
+    * Graficar función de autocorrelación (ACF)
+    * Aplicar prueba de Dickey-Fuller aumentada (ADF)
+    * Aplicar diferenciación si no es estacionaria
+  * En **varianza**:
+
+    * Analizar si la varianza crece con el tiempo
+    * Aplicar transformaciones (como logaritmo) si es necesario
+  * Evaluar **estacionalidad**:
+
+    * Visualmente (descomposición)
+    * Confirmar con ACF (picos regulares en rezagos)
+* [ ] Anotar observaciones:
+
+  * ¿Es estacionaria en media, varianza?
+  * ¿Hay estacionalidad?
+  * ¿Se requiere transformación o diferenciación?
+
+## 4. Documentación para entrega parcial
+
+* [ ] Crear documento PDF con:
+
+  * Breve introducción al problema
+  * Descripción de los datos
   * Análisis exploratorio
-  * Análisis detallado de 2 series seleccionadas
-* [ ] Subir scripts de Python o R usados
-* [ ] Incluir link de Google Drive y del repositorio
+  * Análisis detallado de las 3 series (con visualizaciones y conclusiones)
+* [ ] Subir:
+
+  * Script en Python (.py / .ipynb) o R (.r / .rmd)
+  * Link de Google Drive con el trabajo colaborativo
+  * Link del repositorio usado (GitHub, GitLab, etc.)
