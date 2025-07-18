@@ -9,44 +9,44 @@ Columnas:
   - regular - gtq/galon
   - superior - gtq/galon
   - diesel - gtq/galon
-  - glp cilindro 25lbs. - gtq/lb
+  - glp - gtq/galon
 
 Tipos de datos por columna:
-fecha                            object
-regular - gtq/galon             float64
-superior - gtq/galon            float64
-diesel - gtq/galon              float64
-glp cilindro 25lbs. - gtq/lb    float64
+fecha                    object
+regular - gtq/galon     float64
+superior - gtq/galon    float64
+diesel - gtq/galon      float64
+glp - gtq/galon         float64
 
 Valores nulos por columna:
-fecha                           0
-regular - gtq/galon             0
-superior - gtq/galon            0
-diesel - gtq/galon              0
-glp cilindro 25lbs. - gtq/lb    0
+fecha                   0
+regular - gtq/galon     0
+superior - gtq/galon    0
+diesel - gtq/galon      0
+glp - gtq/galon         0
 
 Porcentaje de nulos por columna:
-fecha                           0.0
-regular - gtq/galon             0.0
-superior - gtq/galon            0.0
-diesel - gtq/galon              0.0
-glp cilindro 25lbs. - gtq/lb    0.0
+fecha                   0.0
+regular - gtq/galon     0.0
+superior - gtq/galon    0.0
+diesel - gtq/galon      0.0
+glp - gtq/galon         0.0
 
 Total filas duplicadas: 0
 
 Estadísticas básicas (solo numéricas):
-       regular - gtq/galon  superior - gtq/galon  diesel - gtq/galon  glp cilindro 25lbs. - gtq/lb
-count          1655.000000           1655.000000         1655.000000                   1655.000000
-mean             30.841692             32.149142           28.407299                      4.855571
-std               3.611342              3.816833            4.870410                      0.360928
-min              21.110000             21.910000           17.610000                      3.960000
-25%              28.280000             29.510000           25.440000                      4.600000
-50%              30.780000             32.190000           27.730000                      4.800000
-75%              33.280000             34.515000           31.300000                      4.880000
-max              40.500000             43.240000           41.270000                      5.880000
+       regular - gtq/galon  superior - gtq/galon  diesel - gtq/galon  glp - gtq/galon
+count          1655.000000           1655.000000         1655.000000      1655.000000
+mean             30.841692             32.149142           28.407299        20.587621
+std               3.611342              3.816833            4.870410         1.530334
+min              21.110000             21.910000           17.610000        16.790400
+25%              28.280000             29.510000           25.440000        19.504000
+50%              30.780000             32.190000           27.730000        20.352000
+75%              33.280000             34.515000           31.300000        20.691200
+max              40.500000             43.240000           41.270000        24.931200
 
 Mediana por columna numérica:
-regular - gtq/galon             30.78
-superior - gtq/galon            32.19
-diesel - gtq/galon              27.73
-glp cilindro 25lbs. - gtq/lb     4.80
+regular - gtq/galon     30.780
+superior - gtq/galon    32.190
+diesel - gtq/galon      27.730
+glp - gtq/galon         20.352
