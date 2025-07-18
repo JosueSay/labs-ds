@@ -6,47 +6,47 @@ Total columnas: 5
 
 Columnas:
   - fecha
-  - regular - gtq/galon
-  - superior - gtq/galon
-  - diesel - gtq/galon
-  - glp - gtq/galon
+  - regular
+  - superior
+  - diesel
+  - glp
 
 Tipos de datos por columna:
-fecha                   datetime64[ns]
-regular - gtq/galon            float64
-superior - gtq/galon           float64
-diesel - gtq/galon             float64
-glp - gtq/galon                float64
+fecha       datetime64[ns]
+regular            float64
+superior           float64
+diesel             float64
+glp                float64
 
 Valores nulos por columna:
-fecha                   0
-regular - gtq/galon     0
-superior - gtq/galon    0
-diesel - gtq/galon      0
-glp - gtq/galon         0
+fecha       0
+regular     0
+superior    0
+diesel      0
+glp         0
 
 Porcentaje de nulos por columna:
-fecha                   0.0
-regular - gtq/galon     0.0
-superior - gtq/galon    0.0
-diesel - gtq/galon      0.0
-glp - gtq/galon         0.0
+fecha       0.0
+regular     0.0
+superior    0.0
+diesel      0.0
+glp         0.0
 
 Total filas duplicadas: 0
 
 Estadísticas básicas (solo numéricas):
-                               fecha  regular - gtq/galon  superior - gtq/galon  diesel - gtq/galon  glp - gtq/galon
-count                           1655          1655.000000           1655.000000         1655.000000      1655.000000
-mean   2023-04-07 23:59:59.999999744            30.841692             32.149142           28.407299        20.587621
-min              2021-01-01 00:00:00            21.110000             21.910000           17.610000        16.790400
-25%              2022-02-18 12:00:00            28.280000             29.510000           25.440000        19.504000
-50%              2023-04-08 00:00:00            30.780000             32.190000           27.730000        20.352000
-75%              2024-05-25 12:00:00            33.280000             34.515000           31.300000        20.691200
-max              2025-07-13 00:00:00            40.500000             43.240000           41.270000        24.931200
-std                              NaN             3.611342              3.816833            4.870410         1.530334
+                               fecha      regular     superior       diesel          glp
+count                           1655  1655.000000  1655.000000  1655.000000  1655.000000
+mean   2023-04-07 23:59:59.999999744    30.841692    32.149142    28.407299    20.587621
+min              2021-01-01 00:00:00    21.110000    21.910000    17.610000    16.790400
+25%              2022-02-18 12:00:00    28.280000    29.510000    25.440000    19.504000
+50%              2023-04-08 00:00:00    30.780000    32.190000    27.730000    20.352000
+75%              2024-05-25 12:00:00    33.280000    34.515000    31.300000    20.691200
+max              2025-07-13 00:00:00    40.500000    43.240000    41.270000    24.931200
+std                              NaN     3.611342     3.816833     4.870410     1.530334
 
 Mediana por columna numérica:
-regular - gtq/galon     30.780
-superior - gtq/galon    32.190
-diesel - gtq/galon      27.730
-glp - gtq/galon         20.352
+regular     30.780
+superior    32.190
+diesel      27.730
+glp         20.352
