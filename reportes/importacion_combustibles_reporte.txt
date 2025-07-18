@@ -1,0 +1,52 @@
+REPORTE BÁSICO DE DATAFRAME
+========================================
+
+Total filas: 293
+Total columnas: 5
+
+Columnas:
+  - fecha
+  - regular
+  - superior
+  - diesel
+  - glp
+
+Tipos de datos por columna:
+fecha        object
+regular     float64
+superior    float64
+diesel      float64
+glp         float64
+
+Valores nulos por columna:
+fecha       0
+regular     0
+superior    0
+diesel      0
+glp         0
+
+Porcentaje de nulos por columna:
+fecha       0.0
+regular     0.0
+superior    0.0
+diesel      0.0
+glp         0.0
+
+Total filas duplicadas: 0
+
+Estadísticas básicas (solo numéricas):
+            regular      superior        diesel           glp
+count  2.930000e+02  2.930000e+02  2.930000e+02  2.930000e+02
+mean   4.199959e+05  4.945875e+05  8.995610e+05  4.222037e+05
+std    2.471180e+05  1.578443e+05  2.945229e+05  2.059063e+05
+min    8.101530e+04  1.702925e+05  2.297647e+05  1.005615e+05
+25%    2.087960e+05  3.724865e+05  6.931605e+05  2.305846e+05
+50%    3.360057e+05  4.911947e+05  8.508069e+05  4.160683e+05
+75%    5.921033e+05  6.162690e+05  1.130871e+06  5.847096e+05
+max    1.141366e+06  1.227174e+06  1.617427e+06  1.077123e+06
+
+Mediana por columna numérica:
+regular     336005.720000
+superior    491194.710000
+diesel      850806.890000
+glp         416068.299524
