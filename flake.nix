@@ -28,6 +28,9 @@
         p.matplotlib
         p.statsmodels
         p.datetime
+        p.openpyxl
+        p.seaborn
+        p.scipy
       ]);
     in {
       default = pkgs.mkShell {
