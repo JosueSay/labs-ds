@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>reporte</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="estilos.css" />
+</head>
+<body>
+<h1 id="reporte-series-de-tiempo">Reporte Series de Tiempo</h1>
+<h2 id="integrantes">Integrantes</h2>
+<ul>
+<li>Flavio Galán - 22386</li>
+<li>Josué Say - 22801</li>
+</ul>
+<h2 id="repositorio">Repositorio</h2>
+<ul>
+<li><a href="https://github.com/JosueSay/labs-ds">Enlace a GitHub</a></li>
+<li>No se trabajó google docs sino md en el repositorio en la carpeta <a href="https://github.com/JosueSay/labs-ds/blob/main/docs/reporte.md">docs/reporte</a></li>
+</ul>
+<h2 id="introducción">1. Introducción</h2>
+<p>El objetivo de este análisis es modelar y predecir el comportamiento de tres series relacionadas con el mercado de combustibles en Guatemala: consumo mensual de diésel, importaciones de gas licuado de petróleo (GLP) y precios de gasolina regular. Para ello se utilizaron datos mensuales entre los años 2000 y 2025, obtenidos de fuentes nacionales y públicas.</p>
+<p>El estudio incluye una exploración del comportamiento histórico de las variables, considerando eventos relevantes como la pandemia por COVID-19 y la guerra entre Rusia y Ucrania, que afectaron la oferta y demanda energética a nivel global. Se eligieron las series por su relevancia económica y su diversidad de comportamiento: consumo estable, importaciones volátiles y precios sensibles a factores externos. El análisis busca identificar patrones, evaluar modelos de predicción y proyectar tendencias futuras.</p>
+<h2 id="descripción-de-los-datos">2. Descripción de los datos</h2>
+<p>Los datos utilizados provienen del portal de acceso a la información pública del Ministerio de Energía y Minas de Guatemala. Las series abarcan el periodo 2000 a 2025, con frecuencia mensual, e incluyen variables de consumo, importación y precios de cuatro tipos de combustible: diésel, gasolina regular, gasolina superior y GLP.</p>
+<p>Las unidades están expresadas en barriles para consumo e importación y en quetzales por galón o quetzales por cilindro de 25 lb para los precios. Se estandarizaron nombres, formatos de fecha y valores numéricos para facilitar el análisis.</p>
+<h2 id="preparación-y-limpieza-de-datos">3. Preparación y limpieza de datos</h2>
+<p>Se desarrolló un proceso automatizado para unificar los archivos originales, seleccionar variables relevantes, renombrar columnas y transformar las fechas al formato datetime.</p>
+<p>Se implementó un sistema de caché para evitar reprocesamiento innecesario y se estructuraron archivos intermedios en CSV que pueden ser reutilizados.</p>
+<p>La limpieza incluyó control de duplicados, revisión de valores extremos y armonización de unidades. Todo el procedimiento se detalla en el notebook entregado.</p>
+<h2 id="análisis-exploratorio">4. Análisis exploratorio</h2>
+<p>El análisis exploratorio se enfocó en comprender la evolución y comportamiento general de las variables seleccionadas. Se presentan estadísticas descriptivas (media, mediana, máximos y mínimos) por combustible y tipo de variable (consumo, importación y precios), las cuales permiten identificar diferencias en volumen, dispersión y comportamiento.</p>
+<p>Se incluyeron histogramas para observar la distribución de cada serie. Estos muestran que la mayoría de las variables presentan asimetría positiva y no siguen una distribución normal. Destaca el diésel como el más estable y el GLP como el más regulado (especialmente en precios).</p>
+<p>Además, se graficaron las series de tiempo tanto en forma combinada como individual por combustible, lo cual evidenció tendencias crecientes, caídas durante la pandemia (2020), repuntes posteriores y posibles patrones estacionales. Las gráficas están colocadas en las secciones correspondientes del reporte.</p>
+<p>Finalmente, se utilizaron heatmaps mensuales por año para identificar estacionalidad y comportamiento interanual. Estos muestran, por ejemplo, mayor consumo e importación en la segunda mitad del año para varios combustibles, así como picos de precios en 2022. Las visualizaciones permiten reforzar el contexto histórico de cada serie.</p>
+<p><strong>Tabla 1. Estadísticas descriptivas – Consumo mensual (barriles):</strong></p>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 17%" />
+<col style="width: 6%" />
+<col style="width: 8%" />
+<col style="width: 58%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Combustible</th>
+<th>Promedio (barriles)</th>
+<th>Mínimo</th>
+<th>Máximo</th>
+<th>Observaciones clave</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Regular</td>
+<td>405,017</td>
+<td>160,742</td>
+<td>942,394</td>
+<td>Alta dispersión. Consumo se ha más que duplicado desde el mínimo.</td>
+</tr>
+<tr class="even">
+<td>Superior</td>
+<td>474,466</td>
+<td>300,243</td>
+<td>790,948</td>
+<td>Menor varianza relativa que la regular.</td>
+</tr>
+<tr class="odd">
+<td>Diésel</td>
+<td>880,198</td>
+<td>507,663</td>
+<td>1,474,651</td>
+<td>El más consumido con diferencia.</td>
+</tr>
+<tr class="even">
+<td>GLP</td>
+<td>322,886</td>
+<td>167,818</td>
+<td>600,454</td>
+<td>Menor consumo.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tabla 2. Estadísticas descriptivas – Importaciones mensuales (barriles):</strong></p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 20%" />
+<col style="width: 7%" />
+<col style="width: 9%" />
+<col style="width: 49%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Combustible</th>
+<th>Promedio (barriles)</th>
+<th>Mínimo</th>
+<th>Máximo</th>
+<th>Observaciones clave</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Regular</td>
+<td>419,996</td>
+<td>81,015</td>
+<td>1,141,366</td>
+<td>Alta variabilidad.</td>
+</tr>
+<tr class="even">
+<td>Superior</td>
+<td>494,588</td>
+<td>170,293</td>
+<td>1,227,174</td>
+<td>Similar a la regular, pero con mayor volumen.</td>
+</tr>
+<tr class="odd">
+<td>Diésel</td>
+<td>899,561</td>
+<td>229,765</td>
+<td>1,617,427</td>
+<td>Confirma alta dependencia.</td>
+</tr>
+<tr class="even">
+<td>GLP</td>
+<td>422,204</td>
+<td>100,562</td>
+<td>1,077,123</td>
+<td>Muy variable, picos fuertes.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tabla 3. Estadísticas descriptivas – Precios mensuales (Q/galón):</strong></p>
+<table>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 16%" />
+<col style="width: 20%" />
+<col style="width: 5%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Combustible</th>
+<th>Mediana (Q/galón)</th>
+<th>Rango Intercuartílico</th>
+<th>Máximo</th>
+<th>Observaciones clave</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Regular</td>
+<td>Q30.78</td>
+<td>Q28.28 – Q33.28</td>
+<td>Q40.50</td>
+<td>Aumentos significativos post-2022.</td>
+</tr>
+<tr class="even">
+<td>Superior</td>
+<td>Q32.19</td>
+<td>Q29.51 – Q34.52</td>
+<td>Q43.24</td>
+<td>Precio más alto, pero sigue patrón de la regular.</td>
+</tr>
+<tr class="odd">
+<td>Diésel</td>
+<td>Q27.73</td>
+<td>Q25.44 – Q31.30</td>
+<td>Q41.27</td>
+<td>Más volátil. Alta subida en eventos críticos.</td>
+</tr>
+<tr class="even">
+<td>GLP (25 lb)</td>
+<td>Q20.35</td>
+<td>Q19.50 – Q20.69</td>
+<td>Q24.93</td>
+<td>Más estable, pero con picos.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="histogramas">Histogramas</h3>
+<p>El análisis de los histogramas revela que ninguna de las variables (consumo, importación o precios) sigue una distribución normal. En el caso del consumo e importación, se observa una fuerte asimetría positiva, especialmente en gasolina regular y GLP, con presencia de valores extremos que reflejan eventos puntuales de alta demanda. El diésel destaca por ser el más estable y con mayor volumen en ambas dimensiones, lo que lo convierte en un buen candidato para modelado directo. En cuanto a los precios, las gasolinas regular y superior presentan distribuciones más simétricas, mientras que el diésel muestra alta variabilidad, probablemente influenciada por factores externos. El GLP, por su parte, presenta una distribución escalonada, indicando posible regulación o control estatal.</p>
+<div style="text-align: center;">
+<p><img src="../images/histogramas/consumo_histograma.png" alt="Histograma Consumos" height="400"/></p>
+</div>
+<div style="text-align: center;">
+<p><img src="../images/histogramas/importaciones_histograma.png" alt="Histograma Importaciones" height="400"/></p>
+</div>
+<div style="text-align: center;">
+<p><img src="../images/histogramas/precios_histograma.png" alt="Histograma Precios" height="400"/></p>
+</div>
+<h3 id="series-de-tiempo">Series de tiempo</h3>
+<p>Las series de tiempo de consumo, importaciones y precios reflejan tendencias crecientes sostenidas, interrumpidas por eventos externos como la pandemia en 2020 y choques de precios en 2022. El diésel domina en volumen, mientras que el GLP muestra un crecimiento reciente. Los precios son más volátiles y responden a factores internacionales. Hay indicios de estacionalidad y comportamientos estructurales distintos por tipo de combustible.</p>
+<p><strong>Consumos:</strong></p>
+<div style="text-align: center;">
+<p><img src="../images/series_tiempo/consumo/consumo_combinada.png" alt="Serie de tiempo para consumos" height="500"/></p>
+</div>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/series_tiempo/consumo/consumo_regular.png" alt="Consumo combustible regular" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/series_tiempo/consumo/consumo_superior.png" alt="Consumo combustible superior" height="280"/>
+</td>
+</tr>
+<tr>
+<td style="border: none;">
+<img src="../images/series_tiempo/consumo/consumo_diesel.png" alt="Consumo combustible diésel" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/series_tiempo/consumo/consumo_glp.png" alt="Consumo combustible GLP" height="280"/>
+</td>
+</tr>
+</table>
+<p><strong>Importaciones:</strong></p>
+<div style="text-align: center;">
+<p><img src="../images/series_tiempo/importaciones/importaciones_combinada.png" alt="Serie de tiempo para importaciones" height="500"/></p>
+</div>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/series_tiempo/importaciones/importaciones_regular.png" alt="Importación combustible regular" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/series_tiempo/importaciones/importaciones_superior.png" alt="Importación combustible superior" height="280"/>
+</td>
+</tr>
+<tr>
+<td style="border: none;">
+<img src="../images/series_tiempo/importaciones/importaciones_diesel.png" alt="Importación combustible diésel" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/series_tiempo/importaciones/importaciones_glp.png" alt="Importación combustible GLP" height="280"/>
+</td>
+</tr>
+</table>
+<p><strong>Precios:</strong></p>
+<div style="text-align: center;">
+<p><img src="../images/series_tiempo/precios/precios_combinada.png" alt="Serie de tiempo para precios" height="500"/></p>
+</div>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/series_tiempo/precios/precios_regular.png" alt="Precio combustible regular" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/series_tiempo/precios/precios_superior.png" alt="Precio combustible superior" height="280"/>
+</td>
+</tr>
+<tr>
+<td style="border: none;">
+<img src="../images/series_tiempo/precios/precios_diesel.png" alt="Precio combustible diésel" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/series_tiempo/precios/precios_glp.png" alt="Precio combustible GLP" height="280"/>
+</td>
+</tr>
+</table>
+<h3 id="heatmap-mensual-por-año">HeatMap mensual por año</h3>
+<p>El consumo muestra una tendencia creciente sostenida desde 2015, con caídas en 2020 y picos frecuentes en la segunda mitad del año, especialmente en diésel y gasolina regular. Las importaciones siguen un patrón similar, reforzando la relación entre demanda interna y abastecimiento externo, aunque con mayor variabilidad mensual. En cuanto a precios, se observa un fuerte incremento en 2022 (especialmente en diésel y gasolina) seguido de una estabilización gradual. GLP destaca por su estabilidad tanto en consumo como en precios.</p>
+<p><strong>Consumos:</strong></p>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/heatmap/consumo/consumo_regular.png" alt="Consumo combustible regular" height="300"/>
+</td>
+<td style="border: none;">
+<img src="../images/heatmap/consumo/consumo_superior.png" alt="Consumo combustible superior" height="300"/>
+</td>
+</tr>
+<tr>
+<td style="border: none;">
+<img src="../images/heatmap/consumo/consumo_diesel.png" alt="Consumo combustible diésel" height="300"/>
+</td>
+<td style="border: none;">
+<img src="../images/heatmap/consumo/consumo_glp.png" alt="Consumo combustible GLP" height="300"/>
+</td>
+</tr>
+</table>
+<p><strong>Importaciones:</strong></p>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/heatmap/importaciones/importaciones_regular.png" alt="Importación combustible regular" height="300"/>
+</td>
+<td style="border: none;">
+<img src="../images/heatmap/importaciones/importaciones_superior.png" alt="Importación combustible superior" height="300"/>
+</td>
+</tr>
+<tr>
+<td style="border: none;">
+<img src="../images/heatmap/importaciones/importaciones_diesel.png" alt="Importación combustible diésel" height="300"/>
+</td>
+<td style="border: none;">
+<img src="../images/heatmap/importaciones/importaciones_glp.png" alt="Importación combustible GLP" height="300"/>
+</td>
+</tr>
+</table>
+<p><strong>Precios:</strong></p>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/heatmap/precios/precios_regular.png" alt="Precio combustible regular" height="300"/>
+</td>
+<td style="border: none;">
+<img src="../images/heatmap/precios/precios_superior.png" alt="Precio combustible superior" height="300"/>
+</td>
+</tr>
+<tr>
+<td style="border: none;">
+<img src="../images/heatmap/precios/precios_diesel.png" alt="Precio combustible diésel" height="300"/>
+</td>
+<td style="border: none;">
+<img src="../images/heatmap/precios/precios_glp.png" alt="Precio combustible GLP" height="300"/>
+</td>
+</tr>
+</table>
+<h2 id="análisis-de-casos-especiales">5. Análisis de casos especiales</h2>
+<h3 id="comportamiento-en-pandemia-2020-2021">Comportamiento en pandemia (2020-2021)</h3>
+<p>Las importaciones y precios de combustibles en Guatemala reflejaron los efectos inmediatos del confinamiento y la posterior reactivación económica. En importaciones, se observó una fuerte caída entre marzo y mayo de 2020, seguida de una recuperación progresiva, con repuntes más marcados en diésel y superior. El GLP mostró alta volatilidad. En precios, todos los combustibles experimentaron incrementos sostenidos durante 2021, especialmente la gasolina regular y superior, alineados con el alza global del crudo. El GLP, en cambio, mostró aumentos escalonados.En conjunto, las gráficas evidencian una respuesta inicial de choque en volúmenes importados, seguida de una normalización parcial con alzas de precios.</p>
+<p><strong>Consumos:</strong></p>
+<div style="text-align: center;">
+<p><img src="../images/special_cases/pandemia_2020-2021/consumo/consumo_combinado.png" alt="Serie de tiempo para consumos" height="500"/></p>
+</div>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/special_cases/pandemia_2020-2021/consumo/consumo_regular.png" alt="Consumo combustible regular" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/special_cases/pandemia_2020-2021/consumo/consumo_superior.png" alt="Consumo combustible superior" height="280"/>
+</td>
+</tr>
+<tr>
+<td style="border: none;">
+<img src="../images/special_cases/pandemia_2020-2021/consumo/consumo_diesel.png" alt="Consumo combustible diésel" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/special_cases/pandemia_2020-2021/consumo/consumo_glp.png" alt="Consumo combustible GLP" height="280"/>
+</td>
+</tr>
+</table>
+<p><strong>Importaciones:</strong></p>
+<div style="text-align: center;">
+<p><img src="../images/special_cases/pandemia_2020-2021/importaciones/importaciones_combinado.png" alt="Serie de tiempo para importaciones" height="500"/></p>
+</div>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/special_cases/pandemia_2020-2021/importaciones/importaciones_regular.png" alt="Importación combustible regular" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/special_cases/pandemia_2020-2021/importaciones/importaciones_superior.png" alt="Importación combustible superior" height="280"/>
+</td>
+</tr>
+<tr>
+<td style="border: none;">
+<img src="../images/special_cases/pandemia_2020-2021/importaciones/importaciones_diesel.png" alt="Importación combustible diésel" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/special_cases/pandemia_2020-2021/importaciones/importaciones_glp.png" alt="Importación combustible GLP" height="280"/>
+</td>
+</tr>
+</table>
+<p><strong>Precios:</strong></p>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/special_cases/pandemia_2020-2021/precios/precios_regular.png" alt="Precios combustible regular" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/special_cases/pandemia_2020-2021/precios/precios_superior.png" alt="Precios combustible superior" height="280"/>
+</td>
+</tr>
+<tr>
+<td style="border: none;">
+<img src="../images/special_cases/pandemia_2020-2021/precios/precios_diesel.png" alt="Precios combustible diésel" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/special_cases/pandemia_2020-2021/precios/precios_glp.png" alt="Precios combustible GLP" height="280"/>
+</td>
+</tr>
+</table>
+<h3 id="comportamiento-reciente-2022---2025">Comportamiento reciente (2022 - 2025)</h3>
+<p>Durante el período 2022–2025, Guatemala enfrentó un entorno energético marcado por la volatilidad postpandemia y los efectos indirectos de la guerra en Ucrania. Los precios de los combustibles se dispararon en 2022, alcanzando niveles récord, y aunque comenzaron a descender gradualmente desde 2023, persistieron oscilaciones que reflejan la inestabilidad global. Las importaciones de combustibles se mantuvieron activas, con el diésel liderando el volumen, pero mostrando variabilidad significativa, especialmente en GLP. El consumo interno mostró una recuperación firme luego del impacto del COVID-19, con tendencias estacionales claras y una demanda creciente en todos los productos, particularmente diésel y GLP.</p>
+<p><strong>Consumos:</strong></p>
+<div style="text-align: center;">
+<p><img src="../images/special_cases/periodo_2022_2025/consumo/consumo_combinado.png" alt="Serie de tiempo para consumos" height="500"/></p>
+</div>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/special_cases/periodo_2022_2025/consumo/consumo_regular.png" alt="Consumo combustible regular" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/special_cases/periodo_2022_2025/consumo/consumo_superior.png" alt="Consumo combustible superior" height="280"/>
+</td>
+</tr>
+<tr>
+<td style="border: none;">
+<img src="../images/special_cases/periodo_2022_2025/consumo/consumo_diesel.png" alt="Consumo combustible diésel" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/special_cases/periodo_2022_2025/consumo/consumo_glp.png" alt="Consumo combustible GLP" height="280"/>
+</td>
+</tr>
+</table>
+<p><strong>Importaciones:</strong></p>
+<div style="text-align: center;">
+<p><img src="../images/special_cases/periodo_2022_2025/importaciones/importaciones_combinado.png" alt="Serie de tiempo para importaciones" height="500"/></p>
+</div>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/special_cases/periodo_2022_2025/importaciones/importaciones_regular.png" alt="Importación combustible regular" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/special_cases/periodo_2022_2025/importaciones/importaciones_superior.png" alt="Importación combustible superior" height="280"/>
+</td>
+</tr>
+<tr>
+<td style="border: none;">
+<img src="../images/special_cases/periodo_2022_2025/importaciones/importaciones_diesel.png" alt="Importación combustible diésel" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/special_cases/periodo_2022_2025/importaciones/importaciones_glp.png" alt="Importación combustible GLP" height="280"/>
+</td>
+</tr>
+</table>
+<p><strong>Precios:</strong></p>
+<div style="text-align: center;">
+<p><img src="../images/special_cases/periodo_2022_2025/precios/precios_combinado.png" alt="Serie de tiempo para precios" height="500"/></p>
+</div>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/special_cases/periodo_2022_2025/precios/precios_regular.png" alt="Precios combustible regular" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/special_cases/periodo_2022_2025/precios/precios_superior.png" alt="Precios combustible superior" height="280"/>
+</td>
+</tr>
+<tr>
+<td style="border: none;">
+<img src="../images/special_cases/periodo_2022_2025/precios/precios_diesel.png" alt="Precios combustible diésel" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/special_cases/periodo_2022_2025/precios/precios_glp.png" alt="Precios combustible GLP" height="280"/>
+</td>
+</tr>
+</table>
+<h2 id="selección-de-series-para-modelado">6. Selección de series para modelado</h2>
+<p>Se eligieron tres series para el modelado: <strong>precio de gasolina regular</strong>, <strong>consumo de diésel</strong> e <strong>importación de GLP</strong>.</p>
+<ul>
+<li><p><strong>Gasolina regular (precio):</strong> es una de las más utilizadas por el parque vehicular liviano y tiene alta sensibilidad social. Fue seleccionada para modelar precios por su relevancia económica y comportamiento volátil en los últimos años, especialmente durante eventos como la pandemia y la guerra en Ucrania.</p></li>
+<li><p><strong>Diésel (consumo):</strong> es el combustible más consumido históricamente en el país, clave para el transporte pesado, comercio y logística. Su análisis permite entender la dinámica productiva y movilidad nacional.</p></li>
+<li><p><strong>GLP (importación):</strong> aunque menos consumido, el GLP es esencial para el uso doméstico. Se eligió esta serie por su crecimiento reciente, alta variabilidad y la posible influencia de subsidios o regulaciones.</p></li>
+</ul>
+<h2 id="modelado-por-cada-serie">7. Modelado (por cada serie)</h2>
+<p>Para cada una de las 3 series, repite este bloque:</p>
+<ul>
+<li>Inicio, fin y frecuencia.</li>
+<li>Gráfico de la serie y observaciones iniciales.</li>
+<li>Descomposición (tendencia, estacionalidad, residuos).</li>
+<li>Estudio de estacionariedad: gráfica, ADF test.</li>
+<li>Transformaciones necesarias (log, diferencia, etc.).</li>
+<li>Estimación de modelos ARIMA (manual o auto_arima).</li>
+<li>Comparación entre modelos (AIC, BIC, residuos).</li>
+<li>Modelos alternativos: Prophet, Holt-Winters, redes neuronales.</li>
+</ul>
+<h2 id="predicción">8. Predicción</h2>
+<ul>
+<li>Inciso 4: Predicción para últimos 3 años (evaluación contra datos reales).</li>
+<li>Inciso 5: Predicción de 2025 completo (hasta el mes actual), comparación con realidad.</li>
+</ul>
+<h2 id="discusión-final">9. Discusión final</h2>
+<ul>
+<li>Comportamiento global de las series.</li>
+<li>Impacto de eventos externos.</li>
+<li>Retos del modelado.</li>
+<li>Limitaciones del análisis.</li>
+</ul>
+<h2 id="conclusiones-y-recomendaciones">10. Conclusiones y recomendaciones</h2>
+<ul>
+<li>Hallazgos principales.</li>
+<li>Qué combustible tiene mejor comportamiento o más estable.</li>
+<li>Qué variables son más predecibles.</li>
+<li>Sugerencias para autoridades o usuarios.</li>
+</ul>
+</body>
+</html>

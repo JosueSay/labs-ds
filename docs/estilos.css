@@ -1,0 +1,109 @@
+@page {
+  margin: 0;
+}
+
+/* === ESTRUCTURA GENERAL === */
+body {
+  margin: 0;
+  padding: 1cm;
+  font-family: 'Courier New', monospace;
+  font-size: 1em;
+  line-height: 1.6;
+  color: #000;
+  text-align: justify;
+}
+
+/* === TITULOS === */
+h1 {
+  font-size: 2.4em;
+  color: #222;
+  margin-top: -1cm;
+  margin-bottom: 0.5em;
+}
+
+h2 {
+  font-size: 2.0em;
+  color: #333;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+h3 {
+  font-size: 1.7em;
+  color: #444;
+  margin-top: 1em;
+  margin-bottom: 0.3em;
+}
+
+h4, h5, h6 {
+  font-size: 1.5em;
+  color: #555;
+  margin-top: 0.8em;
+  margin-bottom: 0.3em;
+}
+
+/* === TEXTO Y LISTAS === */
+p {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol {
+  margin-bottom: 1em;
+  padding-left: 3em;
+}
+
+li {
+  font-size: 1.5em; /* solo aquí para mantenerlo consistente */
+  margin-bottom: 0.3em;
+}
+
+li > p {
+  font-size: 1em; /* Neutraliza el efecto multiplicador dentro del li */
+}
+
+/* === ENLACES === */
+a {
+  color: #1a0dab;
+  text-decoration: none;
+}
+
+/* === NEGRITA === */
+strong {
+  font-weight: 600;
+  color: #000;
+}
+
+/* === TABLAS === */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1cm;
+  font-family: 'Courier New', monospace;
+  font-size: 1.2em;
+}
+
+th, td {
+  border: 1px solid #444;
+  padding: 6px 8px;
+  text-align: center;
+  vertical-align: middle;
+  word-break: break-word;
+}
+
+th {
+  background-color: #e0e0e0;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+col {
+  width: 20% !important;
+}
+
+/* === IMÁGENES CENTRADAS === */
+img {
+  display: block;
+  margin: 1em auto;
+  max-height: 500px;
+}
