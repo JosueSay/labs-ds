@@ -20,8 +20,8 @@
   in {
     devShells = forAllSystems (system: let
       pkgs = nixpkgsFor.${system};
+      # python = pkgs.python311.withPackages (p: [
       python = pkgs.python3.withPackages (p: [
-        p.selenium
         p.pandas
         p.jupyterlab
         p.numpy
@@ -31,6 +31,7 @@
         p.openpyxl
         p.seaborn
         p.scipy
+        # p.pmdarima
       ]);
     in {
       default = pkgs.mkShell {
