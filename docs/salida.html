@@ -468,36 +468,658 @@
 <li><p><strong>Diésel (consumo):</strong> es el combustible más consumido históricamente en el país, clave para el transporte pesado, comercio y logística. Su análisis permite entender la dinámica productiva y movilidad nacional.</p></li>
 <li><p><strong>GLP (importación):</strong> aunque menos consumido, el GLP es esencial para el uso doméstico. Se eligió esta serie por su crecimiento reciente, alta variabilidad y la posible influencia de subsidios o regulaciones.</p></li>
 </ul>
-<h2 id="modelado-por-cada-serie">7. Modelado (por cada serie)</h2>
-<p>Para cada una de las 3 series, repite este bloque:</p>
+<h2 id="modelado">7. Modelado</h2>
+<h3 id="serie-de-precios-de-gasolina-regular">Serie de precios de gasolina regular</h3>
+<h4 id="inicio-fin-y-frecuencia-de-la-serie">Inicio, fin y frecuencia de la serie</h4>
 <ul>
-<li>Inicio, fin y frecuencia.</li>
-<li>Gráfico de la serie y observaciones iniciales.</li>
-<li>Descomposición (tendencia, estacionalidad, residuos).</li>
-<li>Estudio de estacionariedad: gráfica, ADF test.</li>
-<li>Transformaciones necesarias (log, diferencia, etc.).</li>
-<li>Estimación de modelos ARIMA (manual o auto_arima).</li>
-<li>Comparación entre modelos (AIC, BIC, residuos).</li>
-<li>Modelos alternativos: Prophet, Holt-Winters, redes neuronales.</li>
+<li><strong>Inicio:</strong> enero 2022</li>
+<li><strong>Fin:</strong> julio 2025</li>
+<li><strong>Frecuencia:</strong> diaria</li>
 </ul>
-<h2 id="predicción">8. Predicción</h2>
+<h4 id="gráfico-y-observaciones-preliminares">Gráfico y observaciones preliminares</h4>
 <ul>
-<li>Inciso 4: Predicción para últimos 3 años (evaluación contra datos reales).</li>
-<li>Inciso 5: Predicción de 2025 completo (hasta el mes actual), comparación con realidad.</li>
+<li>Se observa un pico de precios durante 2022, con una tendencia a la baja en los años siguientes.</li>
+<li>No se aprecia estacionalidad visual evidente, pero sí cierta ciclicidad irregular.</li>
+<li>Los precios del 2021 fueron excluidos por considerarse atípicos.</li>
+</ul>
+<div style="text-align: center;">
+<p><img src="../images/modelado/serie1/inciso_b.png" alt="Serie Temporal de Precios de Combustible Tipo 'regular' (2022–2025)" height="300"/></p>
+</div>
+<h4 id="descomposición-de-la-serie">Descomposición de la serie</h4>
+<ul>
+<li>Se realizó descomposición clásica en componentes: tendencia, estacionalidad y residuo.</li>
+<li>La serie no es estacionaria en media ni en varianza.</li>
+<li>La media y la varianza cambian significativamente a lo largo del tiempo.</li>
+</ul>
+<div style="text-align: center;">
+<p><img src="../images/modelado/serie1/inciso_c.png" alt="Descomposición de la Variable 'regular'" height="300"/></p>
+</div>
+<h4 id="transformación-de-la-serie">Transformación de la serie</h4>
+<ul>
+<li>Se aplicó una primera diferenciación para intentar estabilizar la media.</li>
+<li>La prueba de Dickey-Fuller sobre la serie diferenciada dio un <strong>p-value ≈ 1.09e-13</strong>, lo cual confirma estacionariedad en media.</li>
+<li>La serie transformada fue utilizada para modelado.</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Métrica</th>
+<th>Test 1</th>
+<th>Test 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Estadístico de prueba</td>
+<td>-2.558103</td>
+<td>-8.521279e+00</td>
+</tr>
+<tr class="even">
+<td>p-value</td>
+<td>0.101969</td>
+<td>1.098956e-13</td>
+</tr>
+<tr class="odd">
+<td># de retardos usados</td>
+<td>9</td>
+<td>17</td>
+</tr>
+<tr class="even">
+<td># de observaciones usadas</td>
+<td>1280</td>
+<td>1272</td>
+</tr>
+<tr class="odd">
+<td>Critical Value (1%)</td>
+<td>-3.435469</td>
+<td>-3.435501</td>
+</tr>
+<tr class="even">
+<td>Critical Value (5%)</td>
+<td>-2.863801</td>
+<td>-2.863815</td>
+</tr>
+<tr class="odd">
+<td>Critical Value (10%)</td>
+<td>-2.567974</td>
+<td>-2.567981</td>
+</tr>
+</tbody>
+</table>
+<h4 id="estacionariedad-en-media">Estacionariedad en media</h4>
+<ul>
+<li><p>El gráfico de ACF de la serie original muestra autocorrelación persistente → indica no estacionariedad.</p></li>
+<li><p>Prueba de Dickey-Fuller sobre la serie original:</p>
+<ul>
+<li><strong>p-value = 0.1019</strong> → no se rechaza la hipótesis nula → <strong>no estacionaria</strong>.</li>
+<li>Luego de una diferenciación: <strong>p-value ≈ 1.09e-13</strong> → <strong>estacionaria en media</strong>.</li>
+</ul></li>
+</ul>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/modelado/serie1/inciso_e.png" alt="Autocorrelación 1" height="300"/>
+</td>
+<td style="border: none;">
+<img src="../images/modelado/serie1/inciso_e1.png" alt="Autocorrelación 2" height="300"/>
+</td>
+<td style="border: none;">
+<img src="../images/modelado/serie1/inciso_e2.png" alt="Autocorrelación Parcial" height="300"/>
+</td>
+</tr>
+</table>
+<h4 id="parámetros-del-modelo-arima">Parámetros del modelo ARIMA</h4>
+<ul>
+<li>Se propusieron modelos ARIMA(1,1,1), ARIMA(1,1,0), ARIMA(0,1,1) y ARIMA(2,1,1).</li>
+<li>También se utilizó <code>auto_arima</code> para comparación.</li>
+<li>Los parámetros se eligieron con base en el análisis de ACF/PACF y en los criterios AIC/BIC.</li>
+</ul>
+<h4 id="comparación-de-modelos-arima">Comparación de modelos ARIMA</h4>
+<ul>
+<li>Se evaluaron residuos y su densidad para cada modelo.</li>
+<li><strong>ARIMA(0,1,1)</strong> presentó mejor AIC (904.588) y residuos más cercanos a ruido blanco.</li>
+<li>Los residuos se distribuyen en forma de campana estrecha, lo cual indica buen ajuste.</li>
+<li>La predicción en 2025 muestra comportamiento plano debido a la naturaleza de la serie diferenciada.</li>
+</ul>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/modelado/serie1/inciso_g.png" alt="Residuos" height="300"/>
+</td>
+<td style="border: none;">
+<img src="../images/modelado/serie1/inciso_g1.png" alt="ARIMA" height="300"/>
+</td>
+</table>
+<h4 id="otros-modelos">Otros modelos</h4>
+<table>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th>Captura de Tendencia</th>
+<th>Captura de Estacionalidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>ARIMA(0,1,1)</strong></td>
+<td>Sí (mediante diferencia)</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td><strong>Prophet</strong></td>
+<td>Sí</td>
+<td>Sí (semanal)</td>
+</tr>
+<tr class="odd">
+<td><strong>Holt-Winters</strong></td>
+<td>Sí</td>
+<td>Sí (anual, aunque artificial en este caso)</td>
+</tr>
+<tr class="even">
+<td><strong>MLP</strong></td>
+<td>Parcialmente</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>ARIMA</strong> ofrece buen ajuste general, pero predice valores planos debido a su naturaleza.</li>
+<li><strong>Prophet</strong> y <strong>Holt-Winters</strong> modelan tendencias y estacionalidades, pero no logran captar las fluctuaciones abruptas.</li>
+<li><strong>MLP</strong> fue el único modelo que capturó parcialmente los picos observados en la serie, con bajo error de predicción.</li>
+</ul>
+<p><strong>Gráficas comparativas</strong>:</p>
+<ul>
+<li>Residuos y densidad de ARIMA: <em>ver imágenes del inciso g</em>.</li>
+</ul>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/modelado/serie1/inciso_h.png" alt="Prophet" height="300"/>
+</td>
+<td style="border: none;">
+<img src="../images/modelado/serie1/inciso_h1.png" alt="Holt-Winters" height="300"/>
+</td>
+<td style="border: none;">
+<img src="../images/modelado/serie1/inciso_h2.png" alt="MLP" height="300"/>
+</td>
+</tr>
+</table>
+<h3 id="serie-de-consumo-de-diésel">Serie de consumo de diésel</h3>
+<h4 id="inicio-fin-y-frecuencia-de-la-serie-1">Inicio, fin y frecuencia de la serie</h4>
+<ul>
+<li><strong>Inicio:</strong> enero 2000</li>
+<li><strong>Fin:</strong> mayo 2025</li>
+<li><strong>Frecuencia:</strong> mensual</li>
+</ul>
+<h4 id="gráfico-y-observaciones-preliminares-1">Gráfico y observaciones preliminares</h4>
+<ul>
+<li>Se observa una tendencia al alza en el consumo de diésel.</li>
+<li>También hay presencia evidente de <strong>estacionalidad</strong>, especialmente en los ciclos anuales.</li>
+<li>La variabilidad de la serie se incrementa con el tiempo.</li>
+</ul>
+<div style="text-align: center;">
+<p><img src="../images/modelado/serie2/inciso_b.png" alt="Serie Temporal de Consumo de Combustible Tipo 'Diésel' (2000–2025)" height="300"/></p>
+</div>
+<h4 id="descomposición-de-la-serie-1">Descomposición de la serie</h4>
+<ul>
+<li>La descomposición muestra componentes tendencia, estacionalidad y residuos bien definidos.</li>
+<li>La estacionalidad es anual y muy marcada.</li>
+<li>Los residuos parecen distribuidos de manera aleatoria sin patrones claros.</li>
+</ul>
+<div style="text-align: center;">
+<p><img src="../images/modelado/serie2/inciso_c.png" alt="Descomposición de la Variable 'diésel'" height="300"/></p>
+</div>
+<h4 id="transformación-de-la-serie-1">Transformación de la serie</h4>
+<ul>
+<li><p>Prueba de Dickey-Fuller aplicada a la serie original:</p>
+<ul>
+<li><strong>Estadístico:</strong> 2.2922</li>
+<li><strong>p-value:</strong> 0.999 → <strong>no estacionaria</strong></li>
+</ul></li>
+<li><p>Luego de aplicar una primera diferenciación:</p>
+<ul>
+<li><strong>Estadístico:</strong> -4.3825</li>
+<li><strong>p-value:</strong> 0.0003 → <strong>estacionaria en media</strong></li>
+</ul></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Métrica</th>
+<th>Test 1</th>
+<th>Test 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Estadístico de prueba</td>
+<td>2.292167</td>
+<td>-4.382493</td>
+</tr>
+<tr class="even">
+<td>p-value</td>
+<td>0.998950</td>
+<td>0.000319</td>
+</tr>
+<tr class="odd">
+<td># de retardos usados</td>
+<td>14</td>
+<td>16</td>
+</tr>
+<tr class="even">
+<td># de observaciones usadas</td>
+<td>290</td>
+<td>288</td>
+</tr>
+<tr class="odd">
+<td>Critical Value (1%)</td>
+<td>-3.453102</td>
+<td>-3.453262</td>
+</tr>
+<tr class="even">
+<td>Critical Value (5%)</td>
+<td>-2.871559</td>
+<td>-2.871628</td>
+</tr>
+<tr class="odd">
+<td>Critical Value (10%)</td>
+<td>-2.572108</td>
+<td>-2.572146</td>
+</tr>
+</tbody>
+</table>
+<h4 id="estacionariedad-en-media-1">Estacionariedad en media</h4>
+<ul>
+<li>ACF muestra autocorrelación persistente, indicando no estacionariedad.</li>
+<li>PACF sugiere orden bajo de modelo ARIMA.</li>
+</ul>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/modelado/serie2/inciso_e.png" alt="ACF" height="300"/>
+</td>
+<td style="border: none;">
+<img src="../images/modelado/serie2/inciso_e1.png" alt="PACF" height="300"/>
+</td>
+</tr>
+</table>
+<h4 id="parámetros-del-modelo-arima-1">Parámetros del modelo ARIMA</h4>
+<ul>
+<li><p>Se propusieron los modelos ARIMA(1,1,1), ARIMA(0,1,1) y ARIMA(2,1,0).</p></li>
+<li><p>Además, se utilizó <code>auto_arima</code> con componente estacional (<code>seasonal=True</code>, <code>m=12</code>).</p></li>
+<li><p>Los parámetros fueron seleccionados con base en los gráficos de ACF/PACF y comparación con criterios AIC.</p></li>
+<li><p><strong>Entrenamiento:</strong> hasta diciembre 2023</p></li>
+<li><p><strong>Validación:</strong> enero a diciembre 2024</p></li>
+<li><p><strong>Prueba:</strong> enero a mayo 2025</p></li>
+</ul>
+<h4 id="comparación-de-modelos-arima-1">Comparación de modelos ARIMA</h4>
+<ul>
+<li><p>Se entrenaron y evaluaron los siguientes modelos:</p>
+<ul>
+<li><strong>ARIMA(1,1,1)</strong></li>
+<li><strong>ARIMA(0,1,1)</strong></li>
+<li><strong>ARIMA(2,1,0)</strong></li>
+<li><strong>auto_arima (modelo automático con estacionalidad)</strong></li>
+</ul></li>
+<li><p>Según la gráfica de comparación, <strong>el modelo automático (<code>auto_arima</code>) se ajusta mejor</strong> a los datos reales del conjunto de prueba.</p></li>
+</ul>
+<div style="text-align: center;">
+<p><img src="../images/modelado/serie2/inciso_g.png" alt="ARIMA" height="300"/></p>
+</div>
+<h4 id="otros-modelos-1">Otros modelos</h4>
+<table>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th>Captura de Tendencia</th>
+<th>Captura de Estacionalidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>ARIMA auto</strong></td>
+<td>Sí (mediante diferencia)</td>
+<td>Sí (mediante componente SARIMA)</td>
+</tr>
+<tr class="even">
+<td><strong>Prophet</strong></td>
+<td>Sí</td>
+<td>Sí (anual)</td>
+</tr>
+<tr class="odd">
+<td><strong>Holt-Winters</strong></td>
+<td>Parcialmente</td>
+<td>Sí (mensual, pero mal ajustada)</td>
+</tr>
+<tr class="even">
+<td><strong>MLP</strong></td>
+<td>Parcialmente</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>ARIMA automático</strong> fue el que mejor ajustó la serie, capturando estacionalidad y tendencia.</li>
+<li><strong>Prophet</strong> detectó adecuadamente la tendencia creciente y los ciclos anuales, pero falló ante las fluctuaciones más bruscas.</li>
+<li><strong>Holt-Winters</strong> no logró converger correctamente; su ajuste fue limitado y requiere mejoras.</li>
+<li><strong>MLP</strong> capturó la forma general pero con errores más altos (RMSE ≈ 65,000), sin modelar bien la estacionalidad ni los extremos.</li>
+</ul>
+<p><strong>Gráficas comparativas</strong>:</p>
+<ul>
+<li>Residuos y predicciones de ARIMA: <em>ver imágenes del inciso g</em>.</li>
+</ul>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/modelado/serie2/inciso_h.png" alt="Prophet" height="300"/>
+</td>
+<td style="border: none;">
+<img src="../images/modelado/serie2/inciso_h1.png" alt="Holt-Winters" height="300"/>
+</td>
+<td style="border: none;">
+<img src="../images/modelado/serie2/inciso_h2.png" alt="MLP" height="300"/>
+</td>
+</tr>
+</table>
+<h3 id="serie-de-importaciones-de-glp">Serie de importaciones de GLP</h3>
+<h4 id="inicio-fin-y-frecuencia-de-la-serie-2">Inicio, fin y frecuencia de la serie</h4>
+<ul>
+<li><strong>Inicio:</strong> enero 2000</li>
+<li><strong>Fin:</strong> mayo 2025</li>
+<li><strong>Frecuencia:</strong> mensual</li>
+</ul>
+<h4 id="gráfico-y-observaciones-preliminares-2">Gráfico y observaciones preliminares</h4>
+<ul>
+<li>Se observa una <strong>tendencia creciente</strong> en las importaciones de GLP.</li>
+<li>La serie presenta una <strong>estacionalidad fuerte</strong> y una varianza creciente con el tiempo.</li>
+<li>Las fluctuaciones son frecuentes, con algunos picos extremos.</li>
+</ul>
+<div style="text-align: center;">
+<p><img src="../images/modelado/serie3/inciso_b.png" alt="Serie GLP" height="300"/></p>
+</div>
+<h4 id="descomposición-de-la-serie-2">Descomposición de la serie</h4>
+<ul>
+<li>La descomposición muestra una <strong>tendencia creciente</strong>, <strong>estacionalidad regular</strong> y <strong>residuos sin patrón definido</strong>.</li>
+<li>La estacionalidad parece mensual, con repeticiones cíclicas claras.</li>
+</ul>
+<div style="text-align: center;">
+<p><img src="../images/modelado/serie3/inciso_c.png" alt="Descomposición GLP" height="300"/></p>
+</div>
+<h4 id="transformación-de-la-serie-2">Transformación de la serie</h4>
+<ul>
+<li>La prueba de Dickey-Fuller aplicada a la serie original arrojó un <strong>p-value ≈ 0.928</strong>, indicando que <strong>no es estacionaria</strong>.</li>
+<li>Luego de aplicar <strong>logaritmo + primera diferenciación</strong>, el <strong>p-value ≈ 4.7e-21</strong>, confirmando <strong>estacionariedad en media</strong>.</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Métrica</th>
+<th>Test 1</th>
+<th>Test 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Estadístico de prueba</td>
+<td>-0.281940</td>
+<td>-1.149170e+01</td>
+</tr>
+<tr class="even">
+<td>p-value</td>
+<td>0.928023</td>
+<td>4.719084e-21</td>
+</tr>
+<tr class="odd">
+<td># de retardos usados</td>
+<td>9</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td># de observaciones usadas</td>
+<td>283</td>
+<td>284</td>
+</tr>
+<tr class="odd">
+<td>Critical Value (1%)</td>
+<td>-3.453670</td>
+<td>-3.453587</td>
+</tr>
+<tr class="even">
+<td>Critical Value (5%)</td>
+<td>-2.871808</td>
+<td>-2.871771</td>
+</tr>
+<tr class="odd">
+<td>Critical Value (10%)</td>
+<td>-2.572241</td>
+<td>-2.572222</td>
+</tr>
+</tbody>
+</table>
+<h4 id="estacionariedad-en-media-2">Estacionariedad en media</h4>
+<ul>
+<li>El gráfico ACF muestra autocorrelación persistente.</li>
+<li>El gráfico PACF sugiere orden bajo de autoregresión.</li>
+</ul>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/modelado/serie3/inciso_e.png" alt="ACF" height="300"/>
+</td>
+<td style="border: none;">
+<img src="../images/modelado/serie3/inciso_e1.png" alt="PACF" height="300"/>
+</td>
+</tr>
+</table>
+<h4 id="parámetros-del-modelo-arima-2">Parámetros del modelo ARIMA</h4>
+<ul>
+<li>Se propusieron los modelos ARIMA(1,1,1), ARIMA(0,1,1) y ARIMA(2,1,0).</li>
+<li>También se utilizó <code>auto_arima</code> con estacionalidad mensual (<code>seasonal=True</code>, <code>m=12</code>).</li>
+<li>Los modelos se compararon en función de su desempeño sobre el conjunto de prueba (enero–mayo 2025).</li>
+</ul>
+<h4 id="comparación-de-modelos-arima-2">Comparación de modelos ARIMA</h4>
+<ul>
+<li>Se observaron diferencias en precisión y forma de ajuste.</li>
+<li><strong>auto_arima</strong> capturó mejor la forma de la serie test.</li>
+</ul>
+<div style="text-align: center;">
+<p><img src="../images/modelado/serie3/inciso_g.png" alt="Comparación ARIMA GLP" height="300"/></p>
+</div>
+<h4 id="otros-modelos-2">Otros modelos</h4>
+<table>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th>Captura de Tendencia</th>
+<th>Captura de Estacionalidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>ARIMA auto</strong></td>
+<td>Sí (mediante diferencia)</td>
+<td>Sí (SARIMA, mensual)</td>
+</tr>
+<tr class="even">
+<td><strong>Prophet</strong></td>
+<td>Sí</td>
+<td>Sí (anual)</td>
+</tr>
+<tr class="odd">
+<td><strong>Holt-Winters</strong></td>
+<td>Parcialmente</td>
+<td>Sí (mensual, pero poco preciso)</td>
+</tr>
+<tr class="even">
+<td><strong>MLP</strong></td>
+<td>Parcialmente</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>ARIMA (auto)</strong> fue el modelo con mejor comportamiento, logrando representar tanto la estacionalidad como la tendencia creciente.</li>
+<li><strong>Prophet</strong> detectó bien la tendencia, pero su enfoque de estacionalidad anual no se adaptó a los ciclos mensuales de la serie.</li>
+<li><strong>Holt-Winters</strong> logró captar patrones, pero su ajuste fue débil y poco confiable.</li>
+<li><strong>MLP</strong> (Red Neuronal) representó parcialmente la forma general de la serie, pero sin capturar la estacionalidad y con errores más altos (RMSE ≈ 0.3363).</li>
+</ul>
+<p><strong>Gráficas comparativas</strong>:</p>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/modelado/serie3/inciso_h.png" alt="Prophet GLP" height="300"/>
+</td>
+<td style="border: none;">
+<img src="../images/modelado/serie3/inciso_h1.png" alt="Holt-Winters GLP" height="300"/>
+</td>
+<td style="border: none;">
+<img src="../images/modelado/serie3/inciso_h2.png" alt="MLP GLP" height="300"/>
+</td>
+</tr>
+</table>
+<h2 id="predicción">8. Predicción</h2>
+<h3 id="serie-de-precios-de-gasolina-regular-1">Serie de precios de gasolina regular</h3>
+<p>Se entrenaron varios modelos de predicción utilizando como conjunto de entrenamiento los datos de 2022 y 2023. La predicción se realizó para el año 2025, y se comparó contra los valores reales disponibles para ese año (enero a mayo).</p>
+<p>Se utilizaron modelos ARIMA (manuales y automáticos), Prophet, Holt-Winters y redes neuronales (MLP). Las predicciones fueron evaluadas con métricas de error RMSE y MAE.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th>RMSE</th>
+<th>MAE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ARIMA(0,1,1)</td>
+<td>0.1856</td>
+<td>0.0637</td>
+</tr>
+<tr class="even">
+<td>ARIMA(1,1,1)</td>
+<td>0.1856</td>
+<td>0.0637</td>
+</tr>
+<tr class="odd">
+<td>ARIMA(1,1,0)</td>
+<td>0.1844</td>
+<td>0.0524</td>
+</tr>
+<tr class="even">
+<td>ARIMA auto</td>
+<td>0.1864</td>
+<td>0.0643</td>
+</tr>
+<tr class="odd">
+<td>MLP</td>
+<td>0.1820</td>
+<td>0.0649</td>
+</tr>
+</tbody>
+</table>
+<p>Entre los modelos evaluados, MLP (red neuronal) obtuvo el mejor RMSE. Sin embargo, la diferencia entre modelos es marginal. En general, los modelos ARIMA también se ajustaron bien a la serie.</p>
+<h4 id="predicción-para-el-año-2025-y-comparación-con-la-realidad">Predicción para el año 2025 y comparación con la realidad</h4>
+<p>La predicción para el año 2025 se realizó usando los modelos entrenados con los datos hasta 2023. Se evaluó qué tan apegadas fueron las predicciones a la realidad observada entre enero y mayo de 2025.</p>
+<p>Los resultados muestran que los modelos lograron capturar de manera razonable la tendencia y comportamiento general de los precios. La precisión es aceptable según las métricas de error, con valores de RMSE por debajo de 0.19, lo cual refleja una predicción confiable para una serie diaria con alta variabilidad.</p>
+<p>Los modelos ARIMA tienden a generar trayectorias más planas, mientras que MLP logra representar mejor los cambios más abruptos en precios.</p>
+<h3 id="serie-de-consumo-de-diésel-1">Serie de consumo de diésel</h3>
+<p>Se entrenaron modelos de predicción utilizando como conjunto de entrenamiento los datos desde el inicio de la serie hasta el año 2023. Posteriormente, se realizaron predicciones para los años 2023, 2024 y 2025, evaluando especialmente el desempeño en el año 2025 (último año disponible).</p>
+<p>Se probaron modelos ARIMA (manuales y automáticos), Prophet, Holt-Winters y redes neuronales (MLP). La evaluación se hizo comparando las predicciones contra los datos reales disponibles para el año 2025.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th>RMSE</th>
+<th>MAE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ARIMA(0,1,1)</td>
+<td>68,068.33</td>
+<td>56,029.01</td>
+</tr>
+<tr class="even">
+<td>ARIMA(1,1,1)</td>
+<td>65,357.34</td>
+<td>54,151.47</td>
+</tr>
+<tr class="odd">
+<td>ARIMA(2,1,0)</td>
+<td>79,363.42</td>
+<td>74,541.04</td>
+</tr>
+<tr class="even">
+<td>ARIMA auto</td>
+<td>32,246.90</td>
+<td>24,407.50</td>
+</tr>
+<tr class="odd">
+<td>MLP</td>
+<td>65,071.59</td>
+<td>54,497.81</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>El mejor modelo fue ARIMA auto, con diferencia significativa respecto a los otros, logrando los menores errores (RMSE y MAE).</li>
+<li>El modelo MLP tuvo desempeño cercano a ARIMA(1,1,1), pero sin superar el ajuste automático.</li>
+<li>Modelos ARIMA manuales mostraron errores más altos, en especial ARIMA(2,1,0).</li>
+</ul>
+<h4 id="predicción-para-el-año-2025-y-comparación-con-la-realidad-1">Predicción para el año 2025 y comparación con la realidad</h4>
+<p>La predicción del año 2025 fue evaluada directamente contra los valores reales conocidos (enero a mayo 2025). La comparación muestra que:</p>
+<ul>
+<li>El modelo ARIMA auto logra capturar mejor el comportamiento general de la serie en 2025, probablemente gracias a su ajuste automático con estacionalidad mensual (<code>seasonal=True, m=12</code>).</li>
+<li>Las predicciones de MLP se acercan visualmente al patrón, pero no logran superar el ajuste estadístico del modelo ARIMA auto.</li>
+<li>El comportamiento real del consumo en 2025 muestra cierta recuperación tras los cambios observados en años anteriores, y los modelos captan correctamente esa tendencia.</li>
+</ul>
+<h3 id="serie-de-importaciones-de-glp-1">Serie de importaciones de GLP</h3>
+<p>Los resultados se resumen en la siguiente tabla:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th>RMSE</th>
+<th>MAE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ARIMA(0,1,1)</td>
+<td>0.4084</td>
+<td>0.3184</td>
+</tr>
+<tr class="even">
+<td>ARIMA(1,1,1)</td>
+<td>0.3395</td>
+<td>0.2678</td>
+</tr>
+<tr class="odd">
+<td>ARIMA(2,1,0)</td>
+<td>0.3995</td>
+<td>0.3398</td>
+</tr>
+<tr class="even">
+<td>ARIMA auto</td>
+<td>0.2281</td>
+<td>0.1947</td>
+</tr>
+<tr class="odd">
+<td>MLP</td>
+<td>0.3363</td>
+<td>0.2473</td>
+</tr>
+</tbody>
+</table>
+<p>El modelo ARIMA auto obtuvo el mejor desempeño con la menor RMSE y MAE. MLP y ARIMA(1,1,1) también mostraron resultados competitivos.</p>
+<h4 id="predicción-para-el-año-2025-y-comparación-con-la-realidad-2">Predicción para el año 2025 y comparación con la realidad</h4>
+<ul>
+<li>ARIMA auto fue el modelo que más se acercó a los valores observados.</li>
+<li>MLP logró capturar algunos picos, pero fue ligeramente menos preciso.</li>
+<li>Los modelos ARIMA manuales mostraron comportamientos más planos y mayor error.</li>
+<li>La predicción fue confiable considerando la escala y estacionalidad de la serie.</li>
 </ul>
 <h2 id="discusión-final">9. Discusión final</h2>
-<ul>
-<li>Comportamiento global de las series.</li>
-<li>Impacto de eventos externos.</li>
-<li>Retos del modelado.</li>
-<li>Limitaciones del análisis.</li>
-</ul>
 <h2 id="conclusiones-y-recomendaciones">10. Conclusiones y recomendaciones</h2>
-<ul>
-<li>Hallazgos principales.</li>
-<li>Qué combustible tiene mejor comportamiento o más estable.</li>
-<li>Qué variables son más predecibles.</li>
-<li>Sugerencias para autoridades o usuarios.</li>
-</ul>
 </body>
 </html>

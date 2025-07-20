@@ -54,12 +54,16 @@ ul, ol {
 }
 
 li {
-  font-size: 1.5em; /* solo aquí para mantenerlo consistente */
+  font-size: 1.5em;
   margin-bottom: 0.3em;
 }
 
 li > p {
   font-size: 1em; /* Neutraliza el efecto multiplicador dentro del li */
+}
+
+ul ul > li{
+  font-size: 1em; 
 }
 
 /* === ENLACES === */
