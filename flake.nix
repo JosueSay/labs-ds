@@ -20,7 +20,12 @@
   in {
     devShells = forAllSystems (system: let
       pkgs = nixpkgsFor.${system};
-      python = pkgs.python312.withPackages (p: [
+      python = pkgs.python312.withPackages (p: let
+        pmdarima = p.pmdarima.overrideAttrs (old: {
+          doCheck = false;
+          doInstallCheck = false;
+        });
+      in [
         # python = pkgs.python3.withPackages (p: [
         p.pandas
         p.jupyterlab
@@ -34,7 +39,7 @@
         p.prophet
         p.sklearn-compat
         p.keras
-        # p.pmdarima
+        pmdarima
       ]);
     in {
       default = pkgs.mkShell {
