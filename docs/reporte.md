@@ -814,7 +814,3 @@ El modelo ARIMA auto obtuvo el mejor desempeño con la menor RMSE y MAE. MLP y A
 - MLP logró capturar algunos picos, pero fue ligeramente menos preciso.
 - Los modelos ARIMA manuales mostraron comportamientos más planos y mayor error.
 - La predicción fue confiable considerando la escala y estacionalidad de la serie.
-
-## 9. Discusión final
-
-## 10. Conclusiones y recomendaciones
