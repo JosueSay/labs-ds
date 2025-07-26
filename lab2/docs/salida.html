@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>reporte</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="estilos.css" />
+</head>
+<body>
+<h1 id="laboratorio-2-comparación-de-modelos-de-predicción">Laboratorio 2 – Comparación de Modelos de Predicción</h1>
+<h2 id="integrantes">Integrantes</h2>
+<ul>
+<li>Flavio Galán - 22386</li>
+<li>Josué Say - 22801</li>
+</ul>
+<h2 id="repositorio">Repositorio</h2>
+<ul>
+<li><a href="https://github.com/JosueSay/labs-ds">Enlace a GitHub</a></li>
+<li>No se trabajó google docs sino md en el repositorio en la carpeta <a href="https://github.com/JosueSay/labs-ds/tree/main/lab2/docs/reporte.md">docs/reporte</a></li>
+</ul>
+<h2 id="serie-precios-de-gasolina-regular">Serie “Precios de Gasolina Regular”</h2>
+<h3 id="tabla-de-métricas-de-evaluación">Tabla de métricas de evaluación</h3>
+<table>
+<colgroup>
+<col style="width: 83%" />
+<col style="width: 7%" />
+<col style="width: 8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th>RMSE</th>
+<th>MAE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ARIMA(1,1,1)</td>
+<td>0.185583</td>
+<td>0.0637273</td>
+</tr>
+<tr class="even">
+<td>ARIMA(0,1,1)</td>
+<td>0.185578</td>
+<td>0.0636919</td>
+</tr>
+<tr class="odd">
+<td>ARIMA(1,1,0)</td>
+<td>0.184396</td>
+<td>0.0523711</td>
+</tr>
+<tr class="even">
+<td>ARIMA Auto</td>
+<td>0.186436</td>
+<td>0.0643341</td>
+</tr>
+<tr class="odd">
+<td>Prophet</td>
+<td>0.213200</td>
+<td>0.131596</td>
+</tr>
+<tr class="even">
+<td>Holt-Winters</td>
+<td>0.199446</td>
+<td>0.115416</td>
+</tr>
+<tr class="odd">
+<td>MLP</td>
+<td>0.190048</td>
+<td>0.0755966</td>
+</tr>
+<tr class="even">
+<td>LSTM Modelo 1 - 1 - Units: 32, Batch: 16, Epochs: 30, Optimizer: adam</td>
+<td>0.197128</td>
+<td>0.113308</td>
+</tr>
+<tr class="odd">
+<td>LSTM Modelo 1 - 2 - Units: 64, Batch: 32, Epochs: 50, Optimizer: adam</td>
+<td>0.204764</td>
+<td>0.133732</td>
+</tr>
+<tr class="even">
+<td>LSTM Modelo 1 - 3 - Units: 64, Batch: 16, Epochs: 40, Optimizer: rmsprop</td>
+<td>0.462503</td>
+<td>0.443123</td>
+</tr>
+<tr class="odd">
+<td>LSTM Modelo 1 - 4 - Units: 128, Batch: 32, Epochs: 60, Optimizer: adam</td>
+<td>0.189733</td>
+<td>0.0734671</td>
+</tr>
+<tr class="even">
+<td>LSTM Modelo 2 - 1 - Units: 32, Batch: 16, Epochs: 30, Optimizer: adam, Dropout: 0.2</td>
+<td>0.223941</td>
+<td>0.153232</td>
+</tr>
+<tr class="odd">
+<td>LSTM Modelo 2 - 2 - Units: 64, Batch: 32, Epochs: 50, Optimizer: adam, Dropout: 0.3</td>
+<td>0.188647</td>
+<td>0.0679398</td>
+</tr>
+<tr class="even">
+<td>LSTM Modelo 2 - 3 - Units: 64, Batch: 16, Epochs: 40, Optimizer: rmsprop, Dropout: 0.25</td>
+<td>0.197485</td>
+<td>0.101310</td>
+</tr>
+<tr class="odd">
+<td>LSTM Modelo 2 - 4 - Units: 128, Batch: 32, Epochs: 60, Optimizer: adam, Dropout: 0.2</td>
+<td>0.241229</td>
+<td>0.179526</td>
+</tr>
+</tbody>
+</table>
+<h3 id="discusión-de-resultados">Discusión de resultados</h3>
+<h4 id="cuál-modelo-predijo-mejor">¿Cuál modelo predijo mejor?</h4>
+<ul>
+<li>Según RMSE y MAE, el modelo con mejor desempeño fue ARIMA(1,1,0).</li>
+<li>No obstante, varios modelos LSTM, en especial el LSTM Modelo 2 – 2, alcanzaron métricas muy cercanas, superando incluso a Prophet, Holt-Winters y MLP.</li>
+</ul>
+<h4 id="son-mejores-los-modelos-lstm-que-los-del-laboratorio-anterior">¿Son mejores los modelos LSTM que los del laboratorio anterior?</h4>
+<ul>
+<li>Si se evalúan métricas cuantitativas (error) el modelo ARIMA(1,1,0) fue ligeramente mejor.</li>
+<li>Por comportamiento visual y ajuste real los modelos LSTM captaron mucho mejor las subidas, bajadas y saltos abruptos de la serie, algo que los modelos clásicos suavizaron excesivamente.</li>
+</ul>
+<h4 id="cómo-se-determinó">¿Cómo se determinó?</h4>
+<ul>
+<li>Las métricas (RMSE y MAE) se usaron como base numérica de comparación.</li>
+<li>Las gráficas mostraron que los LSTM siguieron con mayor fidelidad la estructura real de los precios diarios.</li>
+</ul>
+<h3 id="evaluación-visual">Evaluación visual</h3>
+<p>Tras revisar las gráficas de predicción de todos los modelos LSTM, se identificó que el modelo que mejor se adaptó visualmente a los datos reales fue:</p>
+<p><strong>LSTM Modelo 2 – 2</strong> (Units: 64, Batch: 32, Epochs: 50, Optimizer: adam, Dropout: 0.3)</p>
+<p>Este modelo:</p>
+<ul>
+<li>Reprodujo con notable precisión la predicción, sin embargo, en los picos y caidas abruptas aun no se adapta completamente debido a los comportamientox externos no explicados por el modelo (algo que paso con los modelos del lab1).</li>
+<li>Logró mantener un alineamiento correcto en tiempo y forma con los valores reales, sin generar desplazamientos.</li>
+<li>Fue superior visualmente a modelos clásicos, que tienden a generar curvas.</li>
+</ul>
+<h3 id="gráficas">Gráficas</h3>
+<h4 id="laboratorio-1">Laboratorio 1</h4>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/arima_predictions.png" alt="Precios combustible regular ARIMA" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/prophet_forecast.png" alt="Precios combustible regular PROPHET" height="280"/>
+</td>
+</tr>
+<tr>
+<td style="border: none;">
+<img src="../images/holtwinters_forecast.png" alt="Precios combustible regular HOLT WINTERS" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/mlp_forecast.png" alt="Precios combustible regular MLP" height="280"/>
+</td>
+</tr>
+</table>
+<h4 id="modelos-dl---primer-modelo">Modelos DL - Primer modelo</h4>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/LSTM_Modelo_1_-_1_-_Units_32_Batch_16_Epochs_30_Optimizer_adam.png" alt="Precios combustible regular DL 1-1" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/LSTM_Modelo_1_-_2_-_Units_64_Batch_32_Epochs_50_Optimizer_adam.png" alt="Precios combustible regular DL 1-2" height="280"/>
+</td>
+</tr>
+<tr>
+<td style="border: none;">
+<img src="../images/LSTM_Modelo_1_-_3_-_Units_64_Batch_16_Epochs_40_Optimizer_rmsprop.png" alt="Precios combustible regular DL 1-3" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/LSTM_Modelo_1_-_4_-_Units_128_Batch_32_Epochs_60_Optimizer_adam.png" alt="Precios combustible regular DL 1-4" height="280"/>
+</td>
+</tr>
+</table>
+<h4 id="modelos-dl---segundo-modelo">Modelos DL - Segundo modelo</h4>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/LSTM_Modelo_2_-_1_Units_32_Batch_16_Epochs_30_Optimizer_adam_Dropout_0.2.png" alt="Precios combustible regular DL 2-1" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/LSTM_Modelo_2_-_2_Units_64_Batch_32_Epochs_50_Optimizer_adam_Dropout_0.3.png" alt="Precios combustible regular DL 2-2" height="280"/>
+</td>
+</tr>
+<tr>
+<td style="border: none;">
+<img src="../images/LSTM_Modelo_2_-_3_Units_64_Batch_16_Epochs_40_Optimizer_rmsprop_Dropout_0.25.png" alt="Precios combustible regular DL 2-3" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../images/LSTM_Modelo_2_-_4_Units_128_Batch_32_Epochs_60_Optimizer_adam_Dropout_0.2.png" alt="Precios combustible regular DL 2-4" height="280"/>
+</td>
+</tr>
+</table>
+<h3 id="conclusión">Conclusión</h3>
+<p>Si el objetivo es <strong>minimizar el error promedio</strong>, los modelos ARIMA siguen siendo competitivos. Sin embargo, si se busca un modelo con <strong>mejor capacidad de capturar dinámicas reales y abruptas</strong>, los modelos <strong>LSTM (especialmente Modelo 2 – 2)</strong> son más adecuados, aunque con un pequeño costo en RMSE.</p>
+<p>En función de las métricas y el comportamiento visual, <strong>el mejor modelo globalmente fue LSTM Modelo 2 – 2</strong>, al equilibrar precisión numérica con una representación realista del comportamiento del mercado.</p>
+</body>
+</html>

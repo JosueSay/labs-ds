@@ -1,50 +1,135 @@
-# Laboratorio 2 - Reporte
+# Laboratorio 2 – Comparación de Modelos de Predicción
+
+## Integrantes
+
+- Flavio Galán - 22386
+- Josué Say - 22801
+
+## Repositorio
+
+- [Enlace a GitHub](https://github.com/JosueSay/labs-ds/tree/main/lab2)
+- No se trabajó google docs sino md en el repositorio en la carpeta [docs/reporte](https://github.com/JosueSay/labs-ds/tree/main/lab2/docs/reporte.md)
 
 ## Serie "Precios de Gasolina Regular"
 
-### Análisis visual
+### Tabla de métricas de evaluación
 
-Desde 2021 hasta mediados de 2025, con datos diarios.
+| Modelo                                                                                  | RMSE     | MAE       |
+| --------------------------------------------------------------------------------------- | -------- | --------- |
+| ARIMA(1,1,1)                                                                            | 0.185583 | 0.0637273 |
+| ARIMA(0,1,1)                                                                            | 0.185578 | 0.0636919 |
+| ARIMA(1,1,0)                                                                            | 0.184396 | 0.0523711 |
+| ARIMA Auto                                                                              | 0.186436 | 0.0643341 |
+| Prophet                                                                                 | 0.213200 | 0.131596  |
+| Holt-Winters                                                                            | 0.199446 | 0.115416  |
+| MLP                                                                                     | 0.190048 | 0.0755966 |
+| LSTM Modelo 1 - 1 - Units: 32, Batch: 16, Epochs: 30, Optimizer: adam                   | 0.197128 | 0.113308  |
+| LSTM Modelo 1 - 2 - Units: 64, Batch: 32, Epochs: 50, Optimizer: adam                   | 0.204764 | 0.133732  |
+| LSTM Modelo 1 - 3 - Units: 64, Batch: 16, Epochs: 40, Optimizer: rmsprop                | 0.462503 | 0.443123  |
+| LSTM Modelo 1 - 4 - Units: 128, Batch: 32, Epochs: 60, Optimizer: adam                  | 0.189733 | 0.0734671 |
+| LSTM Modelo 2 - 1 - Units: 32, Batch: 16, Epochs: 30, Optimizer: adam, Dropout: 0.2     | 0.223941 | 0.153232  |
+| LSTM Modelo 2 - 2 - Units: 64, Batch: 32, Epochs: 50, Optimizer: adam, Dropout: 0.3     | 0.188647 | 0.0679398 |
+| LSTM Modelo 2 - 3 - Units: 64, Batch: 16, Epochs: 40, Optimizer: rmsprop, Dropout: 0.25 | 0.197485 | 0.101310  |
+| LSTM Modelo 2 - 4 - Units: 128, Batch: 32, Epochs: 60, Optimizer: adam, Dropout: 0.2    | 0.241229 | 0.179526  |
 
-1. **2021 – inicios de 2022:**
-   El precio comienza en niveles bajos (\~Q22 por galón) y muestra un ascenso progresivo.
+### Discusión de resultados
 
-2. **2022:**
-   Se registra un **aumento abrupto**, alcanzando su punto máximo cercano a **Q40.50**.
-   Esta subida coincide con eventos internacionales que afectaron los precios del crudo (como la guerra en Ucrania).
+#### ¿Cuál modelo predijo mejor?
 
-3. **2023:**
-   El precio desciende gradualmente, aunque se observan algunos picos intermedios que muestran una recuperación parcial.
+- Según RMSE y MAE, el modelo con mejor desempeño fue ARIMA(1,1,0).
+- No obstante, varios modelos LSTM, en especial el LSTM Modelo 2 – 2, alcanzaron métricas muy cercanas, superando incluso a Prophet, Holt-Winters y MLP.
 
-4. **2024:**
-   El precio muestra un ascenso desde 2023 pero, pero sin alcanzar los niveles de 2022.
+#### ¿Son mejores los modelos LSTM que los del laboratorio anterior?
 
-5. **2025:**
-   Los precios se **estabilizan** en un rango alrededor de Q28–Q30, sin picos extremos.
+- Si se evalúan métricas cuantitativas (error) el modelo ARIMA(1,1,0) fue ligeramente mejor.
+- Por comportamiento visual y ajuste real los modelos LSTM captaron mucho mejor las subidas, bajadas y saltos abruptos de la serie, algo que los modelos clásicos suavizaron excesivamente.
 
-- No hay evidencia visual clara de estacionalidad (es decir, no hay patrones que se repitan todos los años o todos los meses).
-- La serie es volátil en el corto plazo, con muchos cambios bruscos.
-- Los precios máximos ocurren en 2022.
-- Los niveles actuales (2025) son más bajos, pero aún por encima de los valores iniciales de 2021.
+#### ¿Cómo se determinó?
 
-La serie original muestra el comportamiento crudo de los precios diarios, permitiendo observar visualmente los picos, caídas y fluctuaciones. La tendencia suaviza la serie para resaltar la dirección general del precio, confirmando una subida fuerte en 2022, seguida de una baja y cierta estabilidad hacia 2025. La estacionalidad, en este caso, no presenta patrones claros ni repetitivos, lo que indica que la serie no es estacional. Por su parte, los residuos reflejan la parte impredecible del precio. En la mayoría de los años, los puntos están cerca de cero, lo cual indica que el modelo logra explicar bien los cambios con solo la tendencia. Sin embargo, en 2022 y parte de 2023 y 2024, los residuos se dispersan considerablemente, lo que sugiere la influencia de eventos anómalos o externos, como la guerra en Ucrania o los efectos post-pandemia, que el modelo no puede prever. Incluso en 2024, especialmente al inicio del año, se observa esta dispersión, aunque disminuye hacia el final.
+- Las métricas (RMSE y MAE) se usaron como base numérica de comparación.
+- Las gráficas mostraron que los LSTM siguieron con mayor fidelidad la estructura real de los precios diarios.
 
-En la gráfica de ACF (Autocorrelación), estamos observando cómo el precio actual de la gasolina regular se relaciona con los precios de días anteriores. En el eje horizontal vemos los "lags", que representan cuántos días atrás estamos comparando. Por ejemplo, el lag 1 compara el precio de hoy con el de ayer, el lag 2 con el de hace dos días, y así sucesivamente. En el eje vertical se muestra qué tanto se parecen esos precios, usando valores entre -1 y 1 (siendo 1 una relación perfecta, 0 ninguna relación, y -1 una relación inversa).
+### Evaluación visual
 
-Cada barra vertical (línea con punto arriba) representa esa relación para un día específico en el pasado. Además, hay una zona sombreada azul, que sirve como una especie de regla o umbral: si una barra está completamente dentro de esa zona, se considera que la relación no es estadísticamente significativa, es decir, que probablemente es ruido o coincidencia. Pero si una barra sobresale de la zona azul (ya sea el punto o la línea), se interpreta como una relación fuerte y real, útil para modelos de predicción.
+Tras revisar las gráficas de predicción de todos los modelos LSTM, se identificó que el modelo que mejor se adaptó visualmente a los datos reales fue:
 
-En este caso, las primeras barras, como la del lag 1 y lag 2, sobresalen claramente de la zona azul, lo cual nos dice que el precio de hoy sí depende bastante de los precios recientes. A medida que pasan más días (lags más lejanos como el 10, 15 o 30), las barras se hacen más pequeñas y muchas quedan cubiertas por la zona azul. Esto significa que la influencia del pasado se va debilitando con el tiempo. Sin embargo, algunas barras como la del lag 30, aunque aún sobresalen parcialmente, tienen una relación más débil o menos segura. Si solo una parte de la barra sobresale, puede que haya algo de relación, pero ya no es tan fuerte ni confiable.
+**LSTM Modelo 2 – 2**
+(Units: 64, Batch: 32, Epochs: 50, Optimizer: adam, Dropout: 0.3)
 
-Este comportamiento, donde las barras empiezan altas y van bajando lentamente, es típico de una serie no estacionaria. Eso significa que el comportamiento del precio cambia a lo largo del tiempo; no sigue una estructura fija o estable. Por ejemplo, en una serie estacionaria el precio podría fluctuar siempre en torno a un mismo promedio, pero aquí vemos que hay subidas y bajadas largas, como la de 2022, probablemente por eventos como la guerra en Ucrania o la crisis post-pandemia. Por eso, antes de aplicar modelos de predicción, es recomendable transformar la serie (por ejemplo, restar el valor anterior o aplicar una "diferencia") para que sea más estable y el modelo pueda aprender mejor.
+Este modelo:
 
-En la gráfica de PACF (Autocorrelación Parcial), estamos observando qué tan directamente se relaciona el precio actual de la gasolina regular con los precios de días anteriores, pero eliminando la influencia de los días intermedios. Por ejemplo, el lag 5 aquí nos dice si el precio de hace cinco días tiene una conexión directa con el de hoy, sin importar lo que pasó entre esos días. Esto es distinto del ACF, que mide la relación acumulada incluyendo todos los lags intermedios.
+- Reprodujo con notable precisión la predicción, sin embargo, en los picos y caidas abruptas aun no se adapta completamente debido a los comportamientox externos no explicados por el modelo (algo que paso con los modelos del lab1).
+- Logró mantener un alineamiento correcto en tiempo y forma con los valores reales, sin generar desplazamientos.
+- Fue superior visualmente a modelos clásicos, que tienden a generar curvas.
 
-El eje horizontal muestra los desfases en días (lags), y el eje vertical indica el grado de relación parcial entre el precio actual y el de esos días, con valores entre -1 y 1. Cada barra vertical representa esa relación para un día específico. También vemos una zona azul que indica el rango en el que una correlación no es estadísticamente confiable. Si una barra queda completamente dentro de esa zona, quiere decir que el día pasado probablemente no afecta directamente al precio actual. Si una barra sobresale, significa que ese día tiene una relación directa y útil.
+### Gráficas
 
-En esta gráfica, solo el lag 1 sobresale con claridad de la banda azul, lo que indica que el precio de hoy tiene una relación directa fuerte con el de ayer. Algunos lags sobresalen un poco, pero su efecto es más débil y los que están dentro de la banda azul o muy cerca de ella significa que no aportan información directa confiable para predecir el valor actual.
+#### Laboratorio 1
 
-Este comportamiento nos dice que, aunque el precio de la gasolina puede verse influido por lo que pasó antes, solo los primeros días tienen un impacto directo real. A medida que nos alejamos en el tiempo, esa influencia desaparece o se mezcla con ruido. Esta gráfica es muy útil para saber cuántos valores pasados conviene usar si vamos a aplicar modelos predictivos como ARIMA, porque nos ayuda a elegir los componentes autoregresivos (AR). En este caso, usar solo el lag 1.
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+  <tr>
+    <td style="border: none;">
+      <img src="../images/arima_predictions.png" alt="Precios combustible regular ARIMA" height="280"/>
+    </td>
+    <td style="border: none;">
+      <img src="../images/prophet_forecast.png" alt="Precios combustible regular PROPHET" height="280"/>
+    </td>
+  </tr>
+  <tr>
+    <td style="border: none;">
+      <img src="../images/holtwinters_forecast.png" alt="Precios combustible regular HOLT WINTERS" height="280"/>
+    </td>
+    <td style="border: none;">
+      <img src="../images/mlp_forecast.png" alt="Precios combustible regular MLP" height="280"/>
+    </td>
+  </tr>
+</table>
 
-Una vez que confirmamos que la serie no es estacionaria, lo siguiente que se debe hacer es aplicar una transformación para que el modelo pueda trabajar con datos más estables. En este caso, la transformación elegida fue la diferenciación, que consiste en calcular el cambio entre un día y el siguiente. Al aplicar esta transformación, observamos que el comportamiento de la serie se estabiliza: ya no tiene una tendencia fuerte ni varianza cambiante, lo cual facilita el modelado. Esto se confirmó mediante una segunda prueba de Dickey-Fuller sobre la serie ya diferenciada. En esta nueva prueba, el estadístico de prueba fue mucho menor que los valores críticos, y el p-value fue extremadamente bajo (cercano a cero), lo que indica que ahora sí se puede considerar estacionaria.
+#### Modelos DL - Primer modelo
 
-Con esta nueva serie transformada, ya se puede aplicar un modelo como ARIMA, que requiere que los datos sean estacionarios para funcionar correctamente. Este modelo no se entrena con los valores originales del precio, sino con los cambios entre días. Entonces, una vez que se hacen predicciones, esas predicciones estarán en forma de diferencias (por ejemplo, +0.12, -0.10, etc.). Para obtener los valores reales del precio, es necesario tomar el último valor conocido real y sumarle las predicciones de forma acumulativa. Es decir, si el precio real fue Q30.00 y el modelo predice +0.15, entonces el nuevo precio estimado sería Q30.15. Para el siguiente día, se suma la siguiente diferencia al valor anterior, y así sucesivamente.
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+  <tr>
+    <td style="border: none;">
+      <img src="../images/LSTM_Modelo_1_-_1_-_Units_32_Batch_16_Epochs_30_Optimizer_adam.png" alt="Precios combustible regular DL 1-1" height="280"/>
+    </td>
+    <td style="border: none;">
+      <img src="../images/LSTM_Modelo_1_-_2_-_Units_64_Batch_32_Epochs_50_Optimizer_adam.png" alt="Precios combustible regular DL 1-2" height="280"/>
+    </td>
+  </tr>
+  <tr>
+    <td style="border: none;">
+      <img src="../images/LSTM_Modelo_1_-_3_-_Units_64_Batch_16_Epochs_40_Optimizer_rmsprop.png" alt="Precios combustible regular DL 1-3" height="280"/>
+    </td>
+    <td style="border: none;">
+      <img src="../images/LSTM_Modelo_1_-_4_-_Units_128_Batch_32_Epochs_60_Optimizer_adam.png" alt="Precios combustible regular DL 1-4" height="280"/>
+    </td>
+  </tr>
+</table>
+
+#### Modelos DL - Segundo modelo
+
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+  <tr>
+    <td style="border: none;">
+      <img src="../images/LSTM_Modelo_2_-_1_Units_32_Batch_16_Epochs_30_Optimizer_adam_Dropout_0.2.png" alt="Precios combustible regular DL 2-1" height="280"/>
+    </td>
+    <td style="border: none;">
+      <img src="../images/LSTM_Modelo_2_-_2_Units_64_Batch_32_Epochs_50_Optimizer_adam_Dropout_0.3.png" alt="Precios combustible regular DL 2-2" height="280"/>
+    </td>
+  </tr>
+  <tr>
+    <td style="border: none;">
+      <img src="../images/LSTM_Modelo_2_-_3_Units_64_Batch_16_Epochs_40_Optimizer_rmsprop_Dropout_0.25.png" alt="Precios combustible regular DL 2-3" height="280"/>
+    </td>
+    <td style="border: none;">
+      <img src="../images/LSTM_Modelo_2_-_4_Units_128_Batch_32_Epochs_60_Optimizer_adam_Dropout_0.2.png" alt="Precios combustible regular DL 2-4" height="280"/>
+    </td>
+  </tr>
+</table>
+
+### Conclusión
+
+Si el objetivo es **minimizar el error promedio**, los modelos ARIMA siguen siendo competitivos.
+Sin embargo, si se busca un modelo con **mejor capacidad de capturar dinámicas reales y abruptas**, los modelos **LSTM (especialmente Modelo 2 – 2)** son más adecuados, aunque con un pequeño costo en RMSE.
+
+En función de las métricas y el comportamiento visual, **el mejor modelo globalmente fue LSTM Modelo 2 – 2**, al equilibrar precisión numérica con una representación realista del comportamiento del mercado.
