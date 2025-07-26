@@ -53,8 +53,8 @@
 
 Tras revisar las gráficas de predicción de todos los modelos LSTM, se identificó que el modelo que mejor se adaptó visualmente a los datos reales fue:
 
-**LSTM Modelo 2 – 2**
-(Units: 64, Batch: 32, Epochs: 50, Optimizer: adam, Dropout: 0.3)
+**LSTM Modelo 2 – 3**
+(Units: 64, Batch: 16, Epochs: 40, Optimizer: rmsprop, Dropout: 0.25)
 
 Este modelo:
 
@@ -130,6 +130,6 @@ Este modelo:
 ### Conclusión
 
 Si el objetivo es **minimizar el error promedio**, los modelos ARIMA siguen siendo competitivos.
-Sin embargo, si se busca un modelo con **mejor capacidad de capturar dinámicas reales y abruptas**, los modelos **LSTM (especialmente Modelo 2 – 2)** son más adecuados, aunque con un pequeño costo en RMSE.
+Sin embargo, si se busca un modelo con **mejor capacidad de capturar dinámicas reales y abruptas**, los modelos **LSTM (especialmente Modelo 2 – 3)** son más adecuados, aunque con un pequeño costo en RMSE.
 
-En función de las métricas y el comportamiento visual, **el mejor modelo globalmente fue LSTM Modelo 2 – 2**, al equilibrar precisión numérica con una representación realista del comportamiento del mercado.
+En función de las métricas y el comportamiento visual, **el mejor modelo globalmente fue LSTM Modelo 2 – 3**, al equilibrar precisión numérica con una representación realista del comportamiento del mercado.
