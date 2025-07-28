@@ -39,6 +39,7 @@
         p.prophet
         p.sklearn-compat
         p.keras
+        p.tabulate
         pmdarima
       ]);
     in {
