@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>reporte</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="estilos.css" />
+</head>
+<body>
+<h1 id="laboratorio-3">Laboratorio 3</h1>
+<ul>
+<li>Josue Say - 228801</li>
+<li>Flavio Galán - 22386</li>
+</ul>
+<h2 id="repositorio">Repositorio</h2>
+<ul>
+<li><a href="https://github.com/JosueSay/labs-ds/tree/main/lab3">Enlace</a></li>
+<li><a href="https://drive.google.com/drive/folders/1DZaL352Xo1kNSpZjXH-HmXbgpbyhrx6E?usp=drive_link">Data</a></li>
+</ul>
+<h2 id="análisis-exploratorio-de-datos">1. Análisis Exploratorio de Datos</h2>
+<h3 id="visualización-de-ejemplos-por-modalidad">1.1 Visualización de ejemplos por modalidad</h3>
+<p>Se seleccionaron imágenes correspondientes al dígito <code>5</code> desde cada una de las cinco modalidades disponibles en el conjunto de datos (<code>m0</code> a <code>m4</code>). Cada modalidad presenta una variación distinta en el fondo, lo cual refleja la intención del dataset de simular distintas condiciones visuales.</p>
+<p>La siguiente figura muestra un ejemplo del mismo dígito bajo distintas modalidades:</p>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<td style="border: none;">
+<img src="../images/digit_5_modalities.png" alt="Ejemplo del dígito 5" height="280"/>
+</td>
+</table>
+<h4 id="observaciones">Observaciones</h4>
+<ul>
+<li><strong>m0</strong>: fondo texturizado en escala de grises.</li>
+<li><strong>m1</strong>: fondo difuminado con tonalidades verdosas.</li>
+<li><strong>m2</strong>: fondo color piel con degradado.</li>
+<li><strong>m3</strong>: fondo altamente complejo, con múltiples colores y patrones.</li>
+<li><strong>m4</strong>: fondo borroso, pero con patrones verticales visibles.</li>
+</ul>
+<p>Estas variaciones introducen ruido visual al dígito, representando un reto importante para los modelos de reconocimiento. Es fundamental que los modelos aprendan a identificar el carácter ignorando las diferencias de fondo.</p>
+<h3 id="análisis-exploratorio-del-conjunto-de-datos">2.1 Análisis exploratorio del conjunto de datos</h3>
+<h4 id="resolución-de-imágenes">2.1.1 Resolución de imágenes</h4>
+<p>Se analizó la resolución de una muestra aleatoria, obteniendo que todas las imágenes tienen un tamaño de:</p>
+<pre class="text"><code>(28, 28) píxeles</code></pre>
+<p>Esto coincide con el tamaño del conjunto MNIST original, lo cual es apropiado para redes convolucionales pequeñas y modelos eficientes.</p>
+<h4 id="cantidad-total-de-imágenes-por-modalidad">2.1.2 Cantidad total de imágenes por modalidad</h4>
+<table>
+<thead>
+<tr class="header">
+<th>Modalidad</th>
+<th>Total de imágenes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>m0</td>
+<td>60,000</td>
+</tr>
+<tr class="even">
+<td>m1</td>
+<td>60,000</td>
+</tr>
+<tr class="odd">
+<td>m2</td>
+<td>60,000</td>
+</tr>
+<tr class="even">
+<td>m3</td>
+<td>60,000</td>
+</tr>
+<tr class="odd">
+<td>m4</td>
+<td>60,000</td>
+</tr>
+</tbody>
+</table>
+<p>El dataset está perfectamente balanceado en cuanto al número total de imágenes por modalidad.</p>
+<h4 id="distribución-de-dígitos-por-modalidad">2.1.3 Distribución de dígitos por modalidad</h4>
+<p>A continuación, se presenta la distribución de imágenes por dígito (0–9) en cada modalidad:</p>
+<h5 id="modalidad-m0">Modalidad m0</h5>
+<table>
+<thead>
+<tr class="header">
+<th>Dígito</th>
+<th>Cantidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>5923</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>6742</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>5958</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>6131</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>5842</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>5421</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>5918</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>6265</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>5851</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>5949</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>La misma distribución se replica en las modalidades <code>m1</code>, <code>m2</code>, <code>m3</code> y <code>m4</code>, dado que todas las modalidades comparten los mismos dígitos, pero con diferentes fondos visuales.</p>
+</blockquote>
+<h4 id="balance-del-conjunto-de-datos">2.1.4 Balance del conjunto de datos</h4>
+<p>Aunque existe una pequeña variación entre las clases (por ejemplo, dígitos como el <code>1</code> tienen más instancias que el <code>5</code>), el conjunto puede considerarse <strong>razonablemente balanceado</strong>. No es necesario aplicar técnicas de rebalanceo adicionales en esta etapa.</p>
+<h2 id="preprocesamiento-de-imágenes">2. Preprocesamiento de Imágenes</h2>
+<ul>
+<li><strong>Normalización</strong>: Escalado de valores de píxeles entre [0, 1].</li>
+<li><strong>Conversión a RGB</strong>: Para compatibilidad con modelos preentrenados como VGG16.</li>
+<li><strong>Uso de <code>cache()</code> y <code>prefetch()</code></strong>: Aceleró la carga y entrenamiento al aprovechar la memoria y GPU mediante TensorFlow.</li>
+</ul>
+<h2 id="modelos-de-deep-learning">3. Modelos de Deep Learning</h2>
+<p>Se construyeron y entrenaron 3 modelos CNN usando TensorFlow con GPU:</p>
+<ul>
+<li><strong>Simple CNN</strong>: Precisión = <strong>94.60%</strong></li>
+<li><strong>VGG Style CNN (Dropout=0.2)</strong>: Precisión = <strong>94.85%</strong> <em>(mejor modelo)</em></li>
+<li><strong>VGG Style CNN (Dropout=0.3)</strong>: Precisión = <strong>94.82%</strong></li>
+</ul>
+<p>Se utilizó <code>trainAndEvaluate()</code> para graficar pérdida y precisión. Se ajustaron hiperparámetros como <code>dropout</code>, <code>optimizer</code> y <code>learning rate</code>.</p>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../images/simple_cnn.png" alt="Simple CNN" height="280"/>
+</td>
+</tr>
+<tr>
+<td style="border: none;">
+<img src="../images/vgg_do-0_2.png" alt="VGG Style CNN Dropout 0.2" height="280"/>
+</td>
+</tr>
+<tr>
+<td style="border: none;">
+<img src="../images/vgg_do-0_3.png" alt="VGG Style CNN Dropout 0.3" height="280"/>
+</td>
+</tr>
+</table>
+<h2 id="red-neuronal-simple">4. Red Neuronal Simple</h2>
+<p>Se implementó una red <strong>fully connected</strong> (densa) con capas <code>Dense</code> y función de activación <code>ReLU</code>. Resultado:</p>
+<ul>
+<li><strong>Simple Dense NN</strong>: Precisión = <strong>81.94%</strong></li>
+</ul>
+<p>Demuestra menor capacidad para detectar patrones espaciales comparado con CNN.</p>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<td style="border: none;">
+<img src="../images/simple_dense_nn.png" alt="Simple Dense NN" height="280"/>
+</td>
+</table>
+<h2 id="otro-algoritmo-svm">5. Otro Algoritmo: SVM</h2>
+<p>Se entrenó un modelo <strong>SVM con kernel RBF</strong>:</p>
+<ul>
+<li>Extracción de características con <strong>VGG16 preentrenado</strong> (congelado).</li>
+<li>Imágenes redimensionadas a 84x84 para compatibilidad.</li>
+<li>División <code>train/test</code> usando <code>train_test_split</code>.</li>
+</ul>
+<p>Resultado:</p>
+<ul>
+<li><strong>SVM Model</strong>: Precisión = <strong>39.66%</strong></li>
+</ul>
+<p>Bajo rendimiento comparado con modelos CNN.</p>
+<h2 id="aumento-de-datos-data-augmentation-incluido-en-ajuste-de-modelos">6. Aumento de Datos (Data Augmentation) (incluido en ajuste de modelos)</h2>
+<p>Se aplicaron técnicas de <code>image augmentation</code> como rotación, zoom y desplazamiento para mejorar la generalización. Se observó que el modelo con <code>Dropout=0.2</code> mostró una ligera mejora en comparación con <code>Dropout=0.3</code>.</p>
+<h2 id="evaluación-con-dígitos-manuscritos">7. Evaluación con Dígitos Manuscritos</h2>
+<p>Se recolectaron imágenes de prueba escritas a mano por el grupo. Se procesaron con la función <code>loadAndPrepareImages()</code>:</p>
+<ul>
+<li>Redimensionamiento a 28x28.</li>
+<li>Normalización.</li>
+<li>Clasificación con el modelo <strong>VGG Style CNN (Dropout=0.2)</strong>.</li>
+<li>Se mostraron predicciones y niveles de confianza por imagen.</li>
+</ul>
+<p>Resultado: El modelo logró clasificar correctamente la mayoría de los dígitos manuscritos, con buena confianza (mayor al 90% en la mayoría).</p>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<td style="border: none;">
+<img src="../images/predictions.png" alt="Predictions" height="280"/>
+</td>
+</table>
+<h2 id="comparación-de-modelos-y-conclusión">8. Comparación de Modelos y Conclusión</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th>Precisión (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Simple CNN</td>
+<td>94.60</td>
+</tr>
+<tr class="even">
+<td>VGG Style CNN (Dropout=0.2)</td>
+<td>94.85</td>
+</tr>
+<tr class="odd">
+<td>VGG Style CNN (Dropout=0.3)</td>
+<td>94.82</td>
+</tr>
+<tr class="even">
+<td>Simple Dense NN</td>
+<td>81.94</td>
+</tr>
+<tr class="odd">
+<td>SVM (con VGG16)</td>
+<td>39.66</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Conclusión</strong>: El modelo más efectivo fue <strong>VGG Style CNN con Dropout de 0.2</strong>, por su equilibrio entre precisión y capacidad de generalización. Se comprobó su robustez con imágenes manuscritas reales. El uso de GPU y técnicas como <code>cache</code>, <code>prefetch</code>, y <code>data augmentation</code> permitió acelerar el entrenamiento y mejorar el rendimiento.</p>
+</body>
+</html>
