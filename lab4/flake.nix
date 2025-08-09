@@ -25,8 +25,12 @@
           doCheck = false;
           doInstallCheck = false;
         });
+        openeo = import ./openeo.nix {
+          pkgs = pkgs;
+          pyPkgs = p;
+        };
       in [
-        # python = pkgs.python3.withPackages (p: [
+        openeo
         p.pandas
         p.jupyterlab
         p.jupyterlab-execute-time
