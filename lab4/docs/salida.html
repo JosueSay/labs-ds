@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>reporte</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="estilos.css" />
+</head>
+<body>
+<h1 id="laboratorio-4">Laboratorio 4</h1>
+<ul>
+<li>Josue Say - 228801</li>
+<li>Flavio Galán - 22386</li>
+</ul>
+<h2 id="repositorio">Repositorio</h2>
+<ul>
+<li><a href="https://github.com/JosueSay/labs-ds/tree/main/lab4">Enlace</a></li>
+<li><a href="https://drive.google.com/file/d/1HtrCx-AEMuC6CeKCLVbERCJMxmqiPB6v/view?usp=sharing">Data</a></li>
+</ul>
+<h2 id="obtención-de-datos">Obtención de datos</h2>
+<ul>
+<li><p><strong>Fuente</strong>: Sentinel-2 L2A (Copernicus).</p></li>
+<li><p><strong>Cobertura temporal</strong>: <strong>feb–ago 2025</strong> (≈7 meses), <strong>29 fechas</strong> con nubosidad &lt;20% (estos archivos se generan con el jupyter notebook y se encuentran como <code>dates.txt</code> e <code>intervals.json</code>):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="ex">2025-02-07</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="ex">2025-02-10</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="ex">2025-02-25</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="ex">2025-02-27</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="ex">2025-03-02</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="ex">2025-03-04</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="ex">2025-03-07</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="ex">2025-03-09</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="ex">2025-03-12</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="ex">2025-03-14</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a><span class="ex">2025-03-19</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a><span class="ex">2025-03-22</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a><span class="ex">2025-03-24</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a><span class="ex">2025-03-26</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a><span class="ex">2025-04-03</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a><span class="ex">2025-04-11</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a><span class="ex">2025-04-13</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a><span class="ex">2025-04-15</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a><span class="ex">2025-04-16</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a><span class="ex">2025-04-18</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a><span class="ex">2025-04-28</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a><span class="ex">2025-05-03</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a><span class="ex">2025-05-13</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true"></a><span class="ex">2025-05-28</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true"></a><span class="ex">2025-07-10</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true"></a><span class="ex">2025-07-17</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true"></a><span class="ex">2025-07-20</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true"></a><span class="ex">2025-07-24</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true"></a><span class="ex">2025-08-01</span></span></code></pre></div></li>
+<li><p><strong>Cobertura espacial</strong>: dos AOI rectangulares en WGS84:</p>
+<ul>
+<li>Atitlán: lon <strong>[-91.326256, -91.071510]</strong>, lat <strong>[14.594800, 14.750979]</strong>.</li>
+<li>Amatitlán: lon <strong>[-90.638065, -90.512924]</strong>, lat <strong>[14.412347, 14.493799]</strong>.</li>
+</ul></li>
+<li><p><strong>Productos descargados</strong>: colecciones por fecha para <strong>NDVI</strong>, <strong>NDWI</strong> y <strong>clorofila-a (Cyano)</strong>; consolidación en <em>stacks</em> multibanda + catálogos por fecha en <code>data/export_consolidated/</code>.</p></li>
+</ul>
+<p><strong>Evidencia</strong>: estructura de carpetas, GeoTIFFs por fecha en <code>data/&lt;Lago&gt;/Cyano_SH/*.tif</code>, y stacks en <code>export_consolidated/</code>.</p>
+<h2 id="visualización">Visualización</h2>
+<ul>
+<li><strong>Mapas estáticos</strong> de clorofila por lago y fecha:</li>
+</ul>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../data/maps/Atitlan_CYANO_2025-04-03.png" alt="Clorofila Atilán" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../data/maps/Amatitlan_CYANO_2025-04-03.png" alt="Clorofila Amatitlán" height="280"/>
+</td>
+</table>
+<ul>
+<li><strong>Mapas comparativos 2x2</strong>:</li>
+</ul>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../data/maps/Atitlan_CYANO_compare_2x2.png" alt="Comparación Atilán" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../data/maps/Amatitlan_CYANO_compare_2x2.png" alt="Comparación Amatitlán" height="280"/>
+</td>
+</table>
+<ul>
+<li><p><strong>Interactivos</strong> (folium):</p>
+<ul>
+<li>Para atitlán se puede revisar los html generados, para Atitlán <code>data/maps/Atitlan_CYANO_2025-05-03.html</code>, Amatitlán <code>data/maps/Amatitlan_CYANO_2025-05-28.html</code>.</li>
+</ul></li>
+</ul>
+<h2 id="índice-de-cianobacteria">Índice de cianobacteria</h2>
+<ul>
+<li><p><strong>Método</strong>: NDCI sobre Sentinel-2 (bandas <strong>B05/B04</strong>) con máscara de agua y conversión a clorofila-a mediante polinomio:</p>
+<!-- $$
+\text{NDCI}=\frac{B05-B04}{B05+B04},\quad
+\text{Chl} = 826.57\cdot \text{NDCI}^3 - 176.43\cdot \text{NDCI}^2 + 19\cdot \text{NDCI} + 4.071
+$$ --></li>
+</ul>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="./images/image.png" alt="Fórmulas" height="50"/>
+</td>
+</table>
+<p>(implementado en el <em>evalscript</em> y aplicado por fecha).</p>
+<ul>
+<li><strong>Salidas</strong>: 29 TIFF por lago en <code>data/&lt;Lago&gt;/Cyano_SH/</code> y <em>stack</em> multitemporal en <code>export_consolidated/</code>.</li>
+</ul>
+<p><strong>Evidencia</strong>: mapas estáticos por fecha y comparativos 2x2.</p>
+<h2 id="análisis-temporal">Análisis temporal</h2>
+<ul>
+<li><strong>Serie temporal</strong> (valor por fecha dentro del lago): <code>data/analysis/*_CYANO_series.csv</code> y gráficos:</li>
+</ul>
+<table style="margin: auto; text-align: center; border-collapse: collapse; border: none;">
+<tr>
+<td style="border: none;">
+<img src="../data/analysis/Atitlan_time_series.png" alt="Atilán Serie Temporal" height="280"/>
+</td>
+<td style="border: none;">
+<img src="../data/analysis/Amatitlan_time_series.png" alt="Atilán Serie Temporal" height="280"/>
+</td>
+</table>
+<ul>
+<li><strong>Picos detectados</strong> (percentil 90 sobre válidos; cobertura mínima 1%):
+<ul>
+<li><strong>Atitlán</strong>: <strong>3 picos</strong> — <strong>2025-03-07</strong>, <strong>2025-07-20</strong>, <strong>2025-08-01</strong>; <strong>máximo</strong> ≈ <strong>170.23</strong> (<code>analysis/Atitlan_CYANO_peaks.json</code>, <code>report_outputs/peaks_summary.json</code>).</li>
+<li><strong>Amatitlán</strong>: <strong>2 picos</strong> — <strong>2025-02-07</strong>, <strong>2025-08-01</strong>; <strong>máximo</strong> ≈ <strong>167.33</strong> (<code>analysis/Amatitlan_CYANO_peaks.json</code>).</li>
+</ul></li>
+<li><strong>Hallazgos claros (a partir de las series)</strong>
+<ul>
+<li><strong>Atitlán</strong> muestra variabilidad alta y varios pulsos fuertes hacia julio–agosto.</li>
+<li><strong>Amatitlán</strong> presenta valores medios más bajos y menos picos, con un repunte importante en agosto.</li>
+</ul></li>
+<li><strong>Mapas comparativos</strong>:
+<ul>
+<li>Atitlán y Amatitlán 2×2, donde las escenas de agosto exhiben áreas acuáticas con intensidades altas (escala relativa de Chl-a).</li>
+</ul></li>
+</ul>
+<h2 id="correlaciones-ndvindwi-vs-cianobacteria">Correlaciones NDVI/NDWI vs cianobacteria</h2>
+<ul>
+<li><p><strong>Resultados numéricos</strong> (<code>data/report_outputs/correlations_summary.json</code>):</p>
+<ul>
+<li><strong>Atitlán</strong> (n=14 fechas emparejadas):
+<ul>
+<li><strong>CYANO vs NDVI</strong>: <strong>r = +0.67</strong> (Pearson), <strong>rho = +0.29</strong> (Spearman). -&gt; A mayor “verdor” (NDVI) en la escena, tiende a aumentar la Chl-a en el lago.</li>
+<li><strong>CYANO vs NDWI</strong>: <strong>r = −0.51</strong>, <strong>rho = −0.38</strong>. -&gt; Cuando el NDWI es más bajo (firma hídrica más débil en la escena), la Chl-a tiende a ser mayor.</li>
+</ul></li>
+<li><strong>Amatitlán</strong> (n=11):
+<ul>
+<li><strong>CYANO vs NDVI</strong>: <strong>r = +0.06</strong> (rho = −0.15).</li>
+<li><strong>CYANO vs NDWI</strong>: <strong>r = −0.12</strong> (rho = +0.05). -&gt; <strong>Relaciones débiles/no concluyentes</strong> en este periodo.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Soporte gráfico</strong>: dispersogramas en <code>data/report_outputs/*_scatter_*.png</code>.</p></li>
+</ul>
+<p>En Atitlán, los picos de Chl-a se alinean con escenas de alto NDVI y NDWI más negativo; esto sugiere estacionalidad/condiciones ambientales coincidentes con proliferación (p. ej., más biomasa en laderas/riveras y menor señal hídrica en orillas en esas fechas). En Amatitlán, la señal de NDVI/NDWI no explica bien la variación de Chl-a (posible influencia de forzantes locales no capturados por estos índices y/o menor número de pares válidos).</p>
+<h2 id="análisis-y-comparación-entre-lagos">Análisis y comparación entre lagos</h2>
+<ul>
+<li><strong>Proliferación por lago (feb–ago 2025)</strong>
+<ul>
+<li><strong>Atitlán</strong>: más eventos (3 picos) y picos más altos (hasta ~170) con una tendencia al alza hacia jul–ago.</li>
+<li><strong>Amatitlán</strong>: menos eventos (2 picos) y valores medios moderados, con un repunte a inicios de agosto.</li>
+</ul></li>
+<li><strong>Intensidad y frecuencia</strong>
+<ul>
+<li><strong>Frecuencia</strong>: Atitlán &gt; Amatitlán (3 vs 2 picos).</li>
+<li><strong>Intensidad</strong>: máximos comparables (170 vs 167), pero Atitlán mantiene más fechas con Chl-a elevada.</li>
+</ul></li>
+<li><strong>Posibles factores diferenciales (desde lo observado)</strong>
+<ul>
+<li><strong>Relación con NDVI/NDWI</strong>: en Atitlán sí hay señal climática/estacional en los índices; en Amatitlán no.</li>
+<li><strong>Entorno en los mapas</strong>: los 2×2 muestran en agosto mayor extensión/intensidad de Chl-a en ambos; sin embargo, el patrón temporal es más persistent en Atitlán.</li>
+<li><strong>Advertencias</strong>: análisis se acota a imágenes S2, máscara de agua y métricas espaciales/temporales usadas; no se incorporaron variables externas (viento, caudales, temperatura del agua, descargas puntuales), que podrían ser determinantes en Amatitlán.</li>
+</ul></li>
+</ul>
+</body>
+</html>
