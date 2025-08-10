@@ -1,1 +1,4 @@
 procedimiento/
+/data/*
+!/data/Lago_Amatitlan.geojson
+!/data/Lago_Atitlan.geojson
