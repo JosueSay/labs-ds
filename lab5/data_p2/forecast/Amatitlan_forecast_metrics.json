@@ -1,0 +1,13 @@
+{
+  "lake": "Amatitlan",
+  "mae": 8.44299396705791,
+  "rmse": 9.221359550928524,
+  "n_train": 23,
+  "n_test": 3,
+  "freq": "7D",
+  "horizon_days": 30,
+  "exog_used": [
+    "ndvi",
+    "ndwi"
+  ]
+}
