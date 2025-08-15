@@ -49,6 +49,7 @@
         p.tabulate
         p.geopandas
         pmdarima
+        p.rasterio
       ]);
     in {
       default = pkgs.mkShell {
