@@ -50,6 +50,7 @@
         p.geopandas
         pmdarima
         p.rasterio
+        p.folium
       ]);
     in {
       default = pkgs.mkShell {
