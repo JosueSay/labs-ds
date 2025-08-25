@@ -46,6 +46,7 @@
         pmdarima
         p.rasterio
         p.folium
+        p.nltk
       ]);
     in {
       default = pkgs.mkShell {
