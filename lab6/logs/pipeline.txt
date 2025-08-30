@@ -1,0 +1,91 @@
+[2025-08-30 05:58:32] INFO - === Logger inicializado ===
+[2025-08-30 05:58:32] INFO - 
+[2025-08-30 05:58:32] INFO - ==============
+[2025-08-30 05:58:32] INFO - ==  CONFIG  ==
+[2025-08-30 05:58:32] INFO - ==============
+[2025-08-30 05:58:32] INFO - DATA_DIR=data RAW_FILE=train.csv CLEAN_FILE=cleaned_train.csv
+[2025-08-30 05:58:32] INFO - USE_CLEANED=False DO_CLEANING=True SAVE_CLEANED=True
+[2025-08-30 05:58:32] INFO - RUN_FREQUENCIES=True RUN_NGRAMS=True RUN_PLOTS=True RUN_MODELS=True RUN_THRESHOLD=False RUN_BERTCNN=True
+[2025-08-30 05:58:32] INFO - Models dir: ./models | Logs: ./logs\pipeline.log
+[2025-08-30 05:58:32] INFO - PyTorch device: cpu
+[2025-08-30 05:58:32] INFO - 
+[2025-08-30 05:58:32] INFO - ================
+[2025-08-30 05:58:32] INFO - ==  LIMPIEZA  ==
+[2025-08-30 05:58:32] INFO - ================
+[2025-08-30 05:58:32] INFO - Filas: 7613 | nulos(text): 0
+[2025-08-30 05:58:33] INFO - Longitud media antes: 101.2 | después: 56.7 | reducción≈43.9%
+[2025-08-30 05:58:33] INFO - Muestras de limpieza (antes -> después):
+[2025-08-30 05:58:33] INFO - [id=3796]
+[2025-08-30 05:58:33] INFO -   BEFORE: So you have a new weapon that can cause un-imaginable destruction.
+[2025-08-30 05:58:33] INFO -   AFTER : new weapon cause un imaginable destruction
+[2025-08-30 05:58:33] INFO - [id=3185]
+[2025-08-30 05:58:33] INFO -   BEFORE: The f$&amp;@ing things I do for #GISHWHES Just got soaked in a deluge going for pads and tampons. Thx @mishacollins @/@
+[2025-08-30 05:58:33] INFO -   AFTER : f things got soaked deluge going pads tampons thx
+[2025-08-30 05:58:33] INFO - [id=7769]
+[2025-08-30 05:58:33] INFO -   BEFORE: DT @georgegalloway: RT @Galloway4Mayor: ÛÏThe CoL police can catch a pickpocket in Liverpool Stree... http://t.co/vXIn1gOq4Q
+[2025-08-30 05:58:33] INFO -   AFTER : dt rt uithe col police catch pickpocket liverpool stree
+[2025-08-30 05:58:33] INFO - [id=191]
+[2025-08-30 05:58:33] INFO -   BEFORE: Aftershock back to school kick off was great. I want to thank everyone for making it possible. What a great night.
+[2025-08-30 05:58:33] INFO -   AFTER : aftershock back school kick great want thank everyone making possible great night
+[2025-08-30 05:58:33] INFO - [id=9810]
+[2025-08-30 05:58:33] INFO -   BEFORE: in response to trauma Children of Addicts develop a defensive self - one that decreases vulnerability. (3
+[2025-08-30 05:58:33] INFO -   AFTER : response trauma children addicts develop defensive self one decreases vulnerability 3
+[2025-08-30 05:58:33] INFO - [id=7934]
+[2025-08-30 05:58:33] INFO -   BEFORE: @Calum5SOS you look like you got caught in a rainstorm this is amazing and disgusting at the same time
+[2025-08-30 05:58:33] INFO -   AFTER : look like got caught rainstorm amazing disgusting time
+[2025-08-30 05:58:33] INFO - [id=2538]
+[2025-08-30 05:58:33] INFO -   BEFORE: my favorite lady came to our volunteer meeting
+hopefully joining her youth collision and i am excite http://t.co/Ij0wQ490cS
+[2025-08-30 05:58:33] INFO -   AFTER : favorite lady came volunteer meeting hopefully joining youth collision excite
+[2025-08-30 05:58:33] INFO - [id=2611]
+[2025-08-30 05:58:33] INFO -   BEFORE: @brianroemmele UX fail of EMV - people want to insert and remove quickly like a gas pump stripe reader. 1 person told me it crashed the POS
+[2025-08-30 05:58:33] INFO -   AFTER : ux fail emv people want insert remove quickly like gas pump stripe reader 1 person told crashed pos
+[2025-08-30 05:58:33] INFO - 
+[2025-08-30 05:58:33] INFO - ===============================
+[2025-08-30 05:58:33] INFO - ==  FRECUENCIAS (unigramas)  ==
+[2025-08-30 05:58:33] INFO - ===============================
+[2025-08-30 05:58:33] INFO - Vocabulario (uni): 5889 | min_df=2
+[2025-08-30 05:58:33] INFO - TOP30 pos: fire, via, disaster, suicide, california, police, people, killed, like, storm, fires, crash, news, families, train…
+[2025-08-30 05:58:33] INFO - TOP30 neg: like, new, get, one, body, would, via, video, people, love, know, day, full, got, time…
+[2025-08-30 05:58:33] INFO - Intersección TOP30: like, fire, get, new, via, people, one, video, emergency, disaster, police, would, body, still, burning…
+[2025-08-30 05:58:34] INFO - 
+[2025-08-30 05:58:34] INFO - ==========================
+[2025-08-30 05:58:34] INFO - ==  MODELOS (baseline)  ==
+[2025-08-30 05:58:34] INFO - ==========================
+[2025-08-30 05:58:34] INFO - Split test=0.2 | seed=42 | calibrateSVC=True
+[2025-08-30 05:58:34] INFO - Train: 6090 | Test: 1523 | Pos(train)=2617 | Pos(test)=654
+[2025-08-30 05:58:34] INFO - [tfidf_uni+LogReg] F1=0.764 ACC=0.798
+[2025-08-30 05:58:34] INFO - [tfidf_uni+NB] F1=0.757 ACC=0.810
+[2025-08-30 05:58:34] INFO - [tfidf_uni+LinSVC] F1=0.748 ACC=0.793
+[2025-08-30 05:58:34] INFO - [tfidf_unibi+LogReg] F1=0.765 ACC=0.799
+[2025-08-30 05:58:34] INFO - [tfidf_unibi+NB] F1=0.750 ACC=0.810
+[2025-08-30 05:58:34] INFO - [tfidf_unibi+LinSVC] F1=0.759 ACC=0.801
+[2025-08-30 05:58:35] INFO - [tfidf_char+LogReg] F1=0.768 ACC=0.804
+[2025-08-30 05:58:35] INFO - [tfidf_char+NB] F1=0.734 ACC=0.798
+[2025-08-30 05:58:36] INFO - [tfidf_char+LinSVC] F1=0.760 ACC=0.800
+[2025-08-30 05:58:36] INFO - MEJOR -> tfidf_char + LogReg | F1=0.768 ACC=0.804
+[2025-08-30 05:58:36] INFO - CM: tn=732 fp=137 fn=161 tp=493
+[2025-08-30 05:58:36] INFO - Guardada figura CM en: ./images\cm_tfidf_char_LogReg.png
+[2025-08-30 05:58:36] INFO - [baseline] Guardado en: ./models\baseline_best.joblib
+[2025-08-30 05:58:36] INFO - 
+[2025-08-30 05:58:36] INFO - ==========================
+[2025-08-30 05:58:36] INFO - ==  BERT+CNN (PyTorch)  ==
+[2025-08-30 05:58:36] INFO - ==========================
+[2025-08-30 05:58:36] INFO - Modelo=distilbert-base-uncased | max_len=128 | epochs=10 | trainable_bert=False | batch=32 | lr=0.001 | device=cpu
+[2025-08-30 06:00:59] INFO - Epoch 1/10 | train_loss=0.5313 | val_loss=0.4383
+[2025-08-30 06:03:20] INFO - Epoch 2/10 | train_loss=0.4642 | val_loss=0.4497
+[2025-08-30 06:05:41] INFO - Epoch 3/10 | train_loss=0.4503 | val_loss=0.4099
+[2025-08-30 06:08:08] INFO - Epoch 4/10 | train_loss=0.4397 | val_loss=0.4125
+[2025-08-30 06:10:36] INFO - Epoch 5/10 | train_loss=0.4255 | val_loss=0.4020
+[2025-08-30 06:13:05] INFO - Epoch 6/10 | train_loss=0.4195 | val_loss=0.4077
+[2025-08-30 06:15:32] INFO - Epoch 7/10 | train_loss=0.4079 | val_loss=0.4165
+[2025-08-30 06:15:32] INFO - Early stopping por paciencia alcanzada.
+[2025-08-30 06:15:52] INFO - [BERT] F1=0.773 ACC=0.825 | threshold=0.5
+[2025-08-30 06:15:52] INFO - [BERT] CM tn=802 fp=67 fn=200 tp=454
+[2025-08-30 06:15:52] INFO - [bert] Guardado tokenizer en: ./models\bert_cnn\tokenizer
+[2025-08-30 06:15:52] INFO - [bert] Guardado modelo en:    ./models\bert_cnn\model
+[2025-08-30 06:15:53] INFO - 
+[2025-08-30 06:15:53] INFO - ========================
+[2025-08-30 06:15:53] INFO - ==  FIN DE EJECUCIÓN  ==
+[2025-08-30 06:15:53] INFO - ========================
+[2025-08-30 06:15:53] INFO - Pipeline completado correctamente.
