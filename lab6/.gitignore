@@ -1,1 +1,3 @@
 data/cleaned_train.csv
+logs/
+models/
