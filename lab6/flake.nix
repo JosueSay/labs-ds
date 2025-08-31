@@ -47,6 +47,13 @@
         p.rasterio
         p.folium
         p.nltk
+        p.ftfy
+        p.unidecode
+        p.wordcloud
+        p.transformers
+        p.joblib
+        p.torch
+        p.jedi-language-server
       ]);
     in {
       default = pkgs.mkShell {
