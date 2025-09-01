@@ -4,7 +4,6 @@
   "user": {
     "id": 1155617398675988481,
     "username": "CubReserva",
-    "displayname": "CUB Reserva Kanajuyu Z 16",
     "followersCount": 170,
     "friendsCount": 166,
     "statusesCount": 214
@@ -14,168 +13,137 @@
   "retweetCount": 2,
   "likeCount": 7,
   "quoteCount": 0,
+  "place": null,
+  "coordinates": null,
   "conversationId": 1832851233213927544,
   "hashtags": [],
   "mentionedUsers": [
     {
       "id": 40256008,
-      "username": "EmisorasUnidas",
-      "displayname": "Emisoras Unidas"
+      "username": "EmisorasUnidas"
     },
     {
       "id": 1915801717,
-      "username": "_ojoconmipisto",
-      "displayname": "Ojoconmipisto"
+      "username": "_ojoconmipisto"
     },
     {
       "id": 1687984068,
-      "username": "soy_502",
-      "displayname": "Soy 502"
+      "username": "soy_502"
     },
     {
       "id": 4353722955,
-      "username": "pattyo502",
-      "displayname": "Patty Orantes \ud83d\udca7"
+      "username": "pattyo502"
     },
     {
       "id": 1320661748,
-      "username": "CONAPgt",
-      "displayname": "CONAP"
+      "username": "CONAPgt"
     },
     {
       "id": 498970290,
-      "username": "marnguate",
-      "displayname": "Ministerio Ambiente y Recursos Naturales"
+      "username": "marnguate"
     },
     {
       "id": 43971175,
-      "username": "Guatevision_tv",
-      "displayname": "Guatevisi\u00f3n"
+      "username": "Guatevision_tv"
     },
     {
       "id": 710243881409839104,
-      "username": "PublinewsGT",
-      "displayname": "Publinews Guatemala"
+      "username": "PublinewsGT"
     },
     {
       "id": 221932544,
-      "username": "AztecaNoticiaGT",
-      "displayname": "Azteca Noticias GT"
+      "username": "AztecaNoticiaGT"
     },
     {
       "id": 1767300056569315328,
-      "username": "eP_investiga",
-      "displayname": "eP investiga"
+      "username": "eP_investiga"
     },
     {
       "id": 1831093180407627776,
-      "username": "vecinosz16",
-      "displayname": "vecinospreocupadoszona16"
+      "username": "vecinosz16"
     },
     {
       "id": 1323798164,
-      "username": "luisvengt",
-      "displayname": "Luis Enrique Ventura"
+      "username": "luisvengt"
     },
     {
       "id": 1384532486575820803,
-      "username": "QuorumGT",
-      "displayname": "Quorum"
+      "username": "QuorumGT"
     },
     {
       "id": 228171408,
-      "username": "TN23NOTICIAS",
-      "displayname": "TN23"
+      "username": "TN23NOTICIAS"
     },
     {
       "id": 93938886,
-      "username": "traficogt",
-      "displayname": "traficoGT"
+      "username": "traficogt"
     },
     {
       "id": 46398081,
-      "username": "karinapazGt",
-      "displayname": "Karina Paz"
+      "username": "karinapazGt"
     },
     {
       "id": 1545610440780169216,
-      "username": "Josechic86",
-      "displayname": "Jos\u00e9 Chic"
+      "username": "Josechic86"
     },
     {
       "id": 338653885,
-      "username": "samuel_pz",
-      "displayname": "Samuel P\u00e9rez \u00c1lvarez \ud83c\udf31"
+      "username": "samuel_pz"
     },
     {
       "id": 202303067,
-      "username": "mmendoza_GT",
-      "displayname": "Bertha Michelle Mendoza Mu\u00f1oz"
+      "username": "mmendoza_GT"
     },
     {
       "id": 74015550,
-      "username": "TelediarioGT",
-      "displayname": "TELEDIARIO GUATEMALA"
+      "username": "TelediarioGT"
     },
     {
       "id": 495102115,
-      "username": "GuatemalaGob",
-      "displayname": "Gobierno Guatemala"
+      "username": "GuatemalaGob"
     },
     {
       "id": 446093953,
-      "username": "NilrilesoR",
-      "displayname": "Nil :D"
+      "username": "NilrilesoR"
     },
     {
       "id": 3365924892,
-      "username": "oco_motora",
-      "displayname": "Puro Frijol"
+      "username": "oco_motora"
     },
     {
       "id": 450859699,
-      "username": "Alex_balsells",
-      "displayname": "Alejandro Balsells Conde"
+      "username": "Alex_balsells"
     },
     {
       "id": 168557941,
-      "username": "lahoragt",
-      "displayname": "Diario La Hora"
+      "username": "lahoragt"
     },
     {
       "id": 298862867,
-      "username": "JLFont001",
-      "displayname": "Juan Luis Font"
+      "username": "JLFont001"
     },
     {
       "id": 309408222,
-      "username": "jpdardon",
-      "displayname": "JPDard\u00f3nP"
+      "username": "jpdardon"
     },
     {
       "id": 3301285679,
-      "username": "justiciayagt",
-      "displayname": "#JusticiaYa"
+      "username": "justiciayagt"
     },
     {
       "id": 1497364184799096834,
-      "username": "Zoom_502gt",
-      "displayname": "ZOOM502-Noticias y m\u00e1s"
+      "username": "Zoom_502gt"
     },
     {
       "id": 252783353,
-      "username": "PlazaPublicaGT",
-      "displayname": "Plaza P\u00fablica"
+      "username": "PlazaPublicaGT"
     }
   ],
-  "links": [],
   "viewCount": 232,
-  "retweetedTweet": null,
   "quotedTweet": null,
   "inReplyToTweetId": 1832851233213927544,
   "inReplyToUser": {
     "id": 1155617398675988481,
-    "username": "CubReserva",
-    "displayname": "CUB Reserva Kanajuyu Z 16"
+    "username": "CubReserva"
   }
 }
