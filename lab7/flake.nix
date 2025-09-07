@@ -54,6 +54,12 @@
         p.joblib
         p.torch
         p.jedi-language-server
+        p.spacy
+        p.spacy-models.es_core_news_sm
+        p.spacy-lookups-data
+        p.spacy-loggers
+        p.spacy-alignments
+        p.spacy-transformers
       ]);
     in {
       default = pkgs.mkShell {
