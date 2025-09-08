@@ -60,6 +60,7 @@
         p.spacy-loggers
         p.spacy-alignments
         p.spacy-transformers
+        p.networkx
       ]);
     in {
       default = pkgs.mkShell {
