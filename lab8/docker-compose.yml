@@ -1,23 +1,23 @@
-# docker-compose up
+# docker compose down
+# docker compose up -d
 
-version: "3.9"
+# docker compose build
+# docker compose up -d
 
 services:
   spark:
-    image: jupyter/pyspark-notebook:latest
+    build: .
+    image: spark-lab:latest
     container_name: spark-jupyter
     ports:
-      - "8888:8888" # Jupyter
+      - "8888:8888"
     volumes:
-      - ./notebooks:/home/jovyan/work # Carpeta local montada en el contenedor
+      - ./notebooks:/home/jovyan/work
     environment:
       - PYSPARK_PYTHON=python3
       - PYSPARK_DRIVER_PYTHON=jupyter
-      - PYSPARK_DRIVER_PYTHON_OPTS="notebook --ip=0.0.0.0 --no-browser --allow-root"
-    command: >
-      start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''
-    # instalar librerías extra al levantar el contenedor
+      - PYSPARK_DRIVER_PYTHON_OPTS=notebook --ip=0.0.0.0 --no-browser --allow-root
     init: true
+    restart: unless-stopped
     entrypoint: >
-      sh -c "pip install pandas numpy matplotlib seaborn scikit-learn &&
-             start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''"
+      start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''
