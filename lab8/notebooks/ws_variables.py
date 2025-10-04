@@ -9,14 +9,10 @@ CACHE_BASE = os.path.join(BASE_DIR, "cache")
 CACHE_VARIABLES = "cache_variables.txt"
 MANIFEST_LOG = os.path.join(OUT_BASE, "manifest.log")
 
-YEARS = range(2013, 2025)  # 2013–2024
+YEARS = range(2013, 2024)  # 2013–2023
 CATEGORIA = 140
 PERIODO = 1
 HEADERS = {"User-Agent": "Mozilla/5.0"}
-
-# Crear carpetas si no existen
-os.makedirs(OUT_BASE, exist_ok=True)
-os.makedirs(CACHE_BASE, exist_ok=True)
 
 # ------------------ Funciones auxiliares ------------------
 def norm(s: str) -> str:

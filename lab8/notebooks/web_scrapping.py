@@ -14,10 +14,6 @@ CATEGORIA = 140
 PERIODO = 1
 HEADERS = {"User-Agent": "Mozilla/5.0"}
 
-# Crear carpetas si no existen
-os.makedirs(OUT_BASE, exist_ok=True)
-os.makedirs(CACHE_BASE, exist_ok=True)
-
 def norm(s: str) -> str:
     s = s.strip().lower()
     s = "".join(c for c in unicodedata.normalize("NFD", s) if unicodedata.category(c) != "Mn")
