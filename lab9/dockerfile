@@ -1,10 +1,10 @@
-# Fija Debian a bookworm para tener openjdk-17 disponible
+# Base con Python 3.11
 FROM python:3.11-slim-bookworm
 
-# Instalar Java 17 y utilidades
+# Java 17 y utilidades (esto no va en requirements)
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    openjdk-17-jdk-headless ca-certificates curl tini && \
+    openjdk-17-jdk-headless ca-certificates curl tini procps && \
     rm -rf /var/lib/apt/lists/*
 
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
@@ -13,15 +13,10 @@ ENV PYSPARK_PYTHON=/usr/local/bin/python
 
 WORKDIR /opt/app
 
-# PySpark + Jupyter + librerías adicionales
+# Copia e instala dependencias Python
+COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir \
-    pyspark==3.5.1 \
-    notebook \
-    jupyterlab \
-    ipykernel \
-    findspark \
-    nltk
+    pip install --no-cache-dir -r requirements.txt
 
 # Usuario no root
 RUN useradd -ms /bin/bash spark && chown -R spark:spark /opt/app
