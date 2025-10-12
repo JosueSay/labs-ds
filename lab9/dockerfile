@@ -19,8 +19,8 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
 # Usuario no root
-RUN useradd -ms /bin/bash spark && chown -R spark:spark /opt/app
-USER spark
+# RUN useradd -ms /bin/bash spark && chown -R spark:spark /opt/app
+# USER spark
 
 EXPOSE 8888
 CMD ["bash"]
