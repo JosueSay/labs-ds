@@ -41,6 +41,7 @@
         p.keras
         p.tabulate
         pmdarima
+        p.seaborn
       ]);
     in {
       default = pkgs.mkShell {
