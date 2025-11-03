@@ -64,6 +64,9 @@
         p.pyspark
         p.panel
         p.plotly
+        p.hvplot
+        p.mdit-py-plugins
+        p.linkify-it-py
       ]);
     in {
       default = pkgs.mkShell {
