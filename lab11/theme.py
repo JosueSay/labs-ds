@@ -388,8 +388,8 @@ python_theme = {
 }
 
 # Registrar el tema en Plotly
-PLOTLY_THEME_NAME = "dashboard_theme"
-pio.templates[PLOTLY_THEME_NAME] = go.layout.Template(python_theme)
+# PLOTLY_THEME_NAME = "dashboard_theme"
+# pio.templates[PLOTLY_THEME_NAME] = go.layout.Template(python_theme)
 
 
 def create_custom_colorscale(color1_key, color2_key):
