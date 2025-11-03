@@ -62,6 +62,8 @@
         p.spacy-transformers
         p.networkx
         p.pyspark
+        p.panel
+        p.plotly
       ]);
     in {
       default = pkgs.mkShell {
